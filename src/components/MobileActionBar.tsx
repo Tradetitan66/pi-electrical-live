@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-
 import Link from "next/link";
 import { track } from "@/lib/analytics";
+import { cx } from "@/lib/cx";
 import { BUSINESS } from "@/data/business";
+import { useScrolled } from "@/hooks/useScrolled";
 
 /**
  * Persistent mobile conversion bar: [ CALL PAUL ] [ FREE QUOTE ].
@@ -30,6 +31,7 @@ import { BUSINESS } from "@/data/business";
  * quote panel.
  */
 export default function MobileActionBar() {
+  const scrolled = useScrolled(12);
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -55,7 +57,10 @@ export default function MobileActionBar() {
   return (
     <div
       ref={ref}
-      className="fixed inset-x-0 bottom-0 z-[65] lg:hidden"
+      className={cx(
+        "fixed inset-x-0 bottom-0 z-[65] transition-transform duration-300 lg:hidden",
+        scrolled ? "translate-y-0" : "translate-y-full",
+      )}
       // Safe area is applied to the inner bar so the surface still reaches the
       // physical bottom edge on notched devices.
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}

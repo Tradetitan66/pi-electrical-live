@@ -87,7 +87,7 @@ export default function Button(props: LinkProps | ButtonProps) {
   const palette = dark ? VARIANTS_DARK[variant] : VARIANTS[variant];
 
   const classes = cx(
-    "group/btn inline-flex items-center justify-center gap-2.5 rounded-lg font-semibold tracking-[0.02em]",
+    "group/btn inline-flex items-center justify-center gap-2.5 rounded-lg font-semibold tracking-[0.02em] touch-manipulation",
     "transition-colors duration-200",
     "disabled:cursor-not-allowed disabled:opacity-50",
     SIZES[size],
