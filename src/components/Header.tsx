@@ -106,17 +106,6 @@ export default function Header() {
                 {BUSINESS.phone.display}
               </a>
 
-              <Button
-                href="/#quote"
-                size="md"
-                className="hidden lg:inline-flex"
-                analyticsEvent="quote_cta_clicked"
-                analyticsLocation="header"
-                analyticsAction="header_get_quote"
-              >
-                Get a free quote
-              </Button>
-
               {/* Mobile menu trigger */}
               <button
                 type="button"

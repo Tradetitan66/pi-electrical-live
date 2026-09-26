@@ -75,7 +75,7 @@ export default function QuickActions() {
             return (
               <li
                 key={tile.id}
-                className="w-[62%] shrink-0 snap-start border-line sm:w-auto sm:border-r sm:last:border-r-0"
+                className="w-[78%] shrink-0 snap-start border-line sm:w-auto sm:border-r sm:last:border-r-0"
               >
                 {external ? (
                   <a
