@@ -67,7 +67,7 @@ export default function QuickActions() {
       <div className="shell">
         <ul
           role="list"
-          className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-px overflow-x-auto px-5 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 lg:grid-cols-5"
+          className="-mx-5 flex snap-x snap-mandatory gap-px overflow-x-auto scroll-smooth touch-pan-x px-5 scrollbar-thin sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 lg:grid-cols-5"
         >
           {TILES.map((tile) => {
             const external = /^tel:|^https:/.test(tile.href);
@@ -75,7 +75,7 @@ export default function QuickActions() {
             return (
               <li
                 key={tile.id}
-                className="w-[78%] shrink-0 snap-start border-line sm:w-auto sm:border-r sm:last:border-r-0"
+                className="w-[72%] shrink-0 snap-start border-line sm:w-auto sm:border-r sm:last:border-r-0"
               >
                 {external ? (
                   <a
