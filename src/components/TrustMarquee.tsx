@@ -81,7 +81,7 @@ export default function TrustMarquee({
   variant = "compact",
   className,
 }: TrustMarqueeProps) {
-  const [override, setOverride] = useState<boolean | null>(null);
+  const override = null;
   const paused = override ?? false;
   const stacked = variant === "stacked";
 
@@ -138,7 +138,6 @@ export default function TrustMarquee({
   return (
     <section
       aria-label={label}
-      data-paused={override === null ? undefined : override}
       className={cx(
         "marquee relative border-y border-line bg-white",
         className,
@@ -160,23 +159,6 @@ export default function TrustMarquee({
         )}
       </div>
 
-      {/*
-        Absolutely positioned so it adds no height to the strip, on an opaque
-        pill because the moving text passes underneath it.
-      */}
-      <button
-        type="button"
-        onClick={() => setOverride(!paused)}
-        aria-label={
-          paused
-            ? `Resume scrolling ${label.toLowerCase()}`
-            : `Pause scrolling ${label.toLowerCase()}`
-        }
-        className="marquee__toggle absolute top-1/2 right-3 z-10 flex h-8 -translate-y-1/2 items-center rounded-full border border-line bg-white px-3 text-xs font-semibold text-ink"
-      >
-        <span aria-hidden="true">{paused ? "▶" : "❚❚"}</span>
-        <span className="ml-1.5">{paused ? "Play" : "Pause"}</span>
-      </button>
-    </section>
+      </section>
   );
 }
