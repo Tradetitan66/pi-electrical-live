@@ -41,6 +41,13 @@ export default function ReviewDetailModal({
             Read on MyBuilder
           </a>
         </div>
+        <button
+          onClick={onClose}
+          aria-label="Close review"
+          className="mt-2 rounded-lg bg-black/80 text-white h-8 w-8 flex items-center justify-center text-sm font-bold absolute top-2 right-2"
+        >
+          ✕
+        </button>
       </div>
     </Modal>
   );

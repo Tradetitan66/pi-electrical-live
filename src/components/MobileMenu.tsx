@@ -109,6 +109,13 @@ export default function MobileMenu({
       </nav>
 
       <div className="safe-b border-t border-white/10 px-5 py-5">
+        <button
+          onClick={onClose}
+          aria-label="Close menu"
+          className="absolute top-3 right-3 rounded-lg bg-black/80 text-white h-8 w-8 flex items-center justify-center text-sm font-semibold"
+        >
+          ✕
+        </button>
         <a
           href={BUSINESS.phone.href}
           onClick={() => {
