@@ -132,8 +132,8 @@ function RotatingArea() {
   const areas = ["Edinburgh", "Lothians", "Fife"];
   const [index, setIndex] = useState(0);
   useEffect(() => {
-    const timer = setInterval(() => setIndex((i) => (i + 1) % areas.length), 2500);
+    const timer = setInterval(() => setIndex((i) => (i + 1) % areas.length), 1000);
     return () => clearInterval(timer);
   }, [areas.length]);
-  return <span className="text-green-ink">{areas[index]}</span>;
+  return <span className="text-green-ink transition-opacity duration-300 ease-in-out">{areas[index]}</span>;
 }
