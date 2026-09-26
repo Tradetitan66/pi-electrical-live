@@ -118,7 +118,7 @@ html {
      for one specific link, do it in JS with scrollIntoView({ behavior:
      "smooth" }) rather than turning this global switch on. */
   scroll-behavior: auto;
-  scroll-padding-top: calc(var(--header-h) + 1rem);
+  scroll-padding-top: calc(5rem + 1rem);
   -webkit-text-size-adjust: 100%;
 }
 
