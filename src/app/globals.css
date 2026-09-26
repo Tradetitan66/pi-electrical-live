@@ -1,0 +1,448 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   PI ELECTRICAL - DESIGN TOKENS
+   --------------------------------------------------------------------------
+   Palette values are customer/brand confirmed. Contrast ratios below were
+   measured, not estimated:
+
+   green #6DD491 on black #0B0D0C ......... 10.65:1  AAA  (CTA fill + label)
+   green #6DD491 on charcoal #171A18 ...... 10.65:1  AAA
+   ink    #151816 on warm #F7F7F3 ........ 16.65:1  AAA  (body text)
+   muted  #626963 on warm #F7F7F3 ......... 5.26:1  AA   (secondary text)
+   muted-dark #A7AEA8 on black #0B0D0C .... 8.60:1  AAA  (on dark surfaces)
+   green-ink #17734A on warm #F7F7F3 ...... 5.45:1  AA   (green text/links)
+   star      #A37F00 on white #FFFFFF ..... 3.75:1  AA   (stars, light)
+   star      #A37F00 on warm #F7F7F3 ...... 3.50:1  AA   (stars, light)
+   star-dark #FABB05 on black #0B0D0C ..... 11.30:1 AAA  (stars, dark)
+
+   WHY green-ink EXISTS: the brand green is a LIGHT colour. Used as text on
+   the warm background it scores 1.52:1 and is unreadable. Green is therefore
+   a FILL on light surfaces (always paired with ink text) and only becomes
+   text via --color-green-ink.
+
+   WHY muted-dark EXISTS: the brief's #626963 scores 3.45:1 on black and
+   fails AA. Dark surfaces use a separate, lighter muted token.
+
+   WHY TWO STAR TOKENS: the stars are meaningful NON-TEXT graphics, so WCAG
+   1.4.11 requires 3:1. They used to be the brand green, which measured
+   1.83:1 on white and 1.70:1 on warm - a genuine failure.
+
+   They are Google's rating yellow. #FABB05 (Google Maps / Business Profile)
+   is hue 44.6deg at 96% saturation, and it measures 11.30:1 on black, so it
+   is used verbatim as --color-star-dark. On the light review cards that same
+   hex is only 1.72:1 on white and 1.61:1 on warm, which fails. --color-star
+   is therefore the same colour darkened: hue 46.7deg (2.1deg off Google),
+   saturation 95%, at 3.75:1 on white and 3.50:1 on warm. Visually identical
+   to the Google yellow, and it passes. Do not "simplify" this to a single
+   yellow: a yellow bright enough for the light cards is invisible on black,
+   and Google's own hex is the proof.
+
+   RULE: never use --color-green for text or focus rings on light surfaces.
+   ========================================================================== */
+@theme {
+  /* Surfaces */
+  --color-warm: #f7f7f3;
+  --color-surface: #eef2ee;
+  --color-white: #ffffff;
+  --color-line: #dde2dd;
+
+  /* Dark surfaces */
+  --color-black: #0b0d0c;
+  --color-charcoal: #171a18;
+
+  /* Text */
+  --color-ink: #151816;
+  --color-muted: #626963;
+  --color-muted-dark: #a7aea8;
+
+  /* Brand */
+  --color-green: #6dd491;
+  --color-green-strong: #45c97e;
+  --color-green-ink: #17734a;
+
+  /* Review stars - Google rating yellow. See the note in the header comment. */
+  --color-star: #a37f00;
+  --color-star-dark: #fabb05;
+
+  /* Type */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-archivo), var(--font-inter), ui-sans-serif,
+    system-ui, sans-serif;
+
+  /* Breakpoints */
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 96rem;
+
+  /* Layout */
+  --spacing-header: 4.25rem;
+  --spacing-gutter: 1.25rem;
+}
+
+:root {
+  /* Header height used for scroll-padding and sticky offsets. */
+  --header-h: 4.25rem;
+  /* Height reserved at the bottom of the page for the mobile action bar. */
+  --mobile-bar-h: 0rem;
+  color-scheme: light;
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --header-h: 5rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+html {
+  /* NOT smooth. `scroll-behavior: smooth` on the scrolling element animates
+     EVERY scroll, including the two cases that must be instant:
+
+       - Route changes. Next.js scrolls to top on navigation, but that call
+         inherits the CSS smooth behaviour. Measured: clicking the brand from
+         the bottom of /services took 2433ms to reach the top, and a normal
+         header link took 1574ms. The visitor is left watching the old page
+         swoop while the new one is already rendered, which reads as "the link
+         did not work".
+       - The skip link. Its whole purpose is to move focus past the header
+         immediately; animating the jump defeats the reason it exists.
+
+     The in-page #quote jump is instant too, which is fine - it lands right
+     next to the heading you just asked for. If a smooth glide is ever wanted
+     for one specific link, do it in JS with scrollIntoView({ behavior:
+     "smooth" }) rather than turning this global switch on. */
+  scroll-behavior: auto;
+  scroll-padding-top: calc(var(--header-h) + 1rem);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-warm);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Reserve room for the fixed mobile action bar so it never covers content. */
+  padding-bottom: var(--mobile-bar-h);
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background-color: var(--color-black);
+  color: var(--color-warm);
+}
+
+/* --------------------------------------------------------------------------
+   Focus
+   Unlayered on purpose: this must be able to override Tailwind's
+   focus:outline-none utilities, otherwise focus rings are silently lost.
+   Surface-dependent because mint green is invisible on the warm background
+   (1.52:1) - light surfaces get an ink ring, dark surfaces get a green one.
+
+   No border-radius is set here. Because this rule is unlayered it outranks
+   every Tailwind utility regardless of specificity, so a radius declared here
+   would silently flatten the corners of whatever is focused - previously this
+   forced 2px onto all 8px buttons on focus. The outline traces the element's
+   own border-radius automatically, so leaving it alone is both correct and
+   what keeps the ring following each control's real corner radius.
+   -------------------------------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+.on-dark :focus-visible,
+.on-dark:focus-visible {
+  outline-color: var(--color-green);
+}
+
+/* --------------------------------------------------------------------------
+   Layout helpers
+   -------------------------------------------------------------------------- */
+@utility shell {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 90rem;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 48rem) {
+  .shell {
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 80rem) {
+  .shell {
+    padding-inline: 3rem;
+  }
+}
+
+/* Fluid display sizes. Clamped so nothing overflows at 320px. */
+@utility text-display-xl {
+  font-size: clamp(2.75rem, 1.1rem + 7.4vw, 7.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+}
+
+@utility text-display-lg {
+  font-size: clamp(2.25rem, 1.15rem + 4.6vw, 4.75rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+@utility text-display-md {
+  font-size: clamp(1.75rem, 1.1rem + 2.6vw, 3rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+@utility text-display-sm {
+  font-size: clamp(1.375rem, 1.05rem + 1.3vw, 1.875rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Hairline used to separate editorial bands. */
+@utility rule {
+  border-top: 1px solid var(--color-line);
+}
+
+/* --------------------------------------------------------------------------
+   Motion
+   Subtle only: fade + small translate. No bounce, no rotation, no parallax.
+   -------------------------------------------------------------------------- */
+@keyframes pi-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes pi-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pi-wipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Scroll reveal. Starts visible by default and is only hidden once JS has
+   confirmed it can animate it back in, so content is NEVER invisible when
+   JavaScript is unavailable, blocked, or errors. */
+.reveal-ready .reveal {
+  opacity: 0;
+}
+
+.reveal-ready .reveal.is-visible {
+  animation: pi-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-enter {
+  animation: pi-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-enter-1 {
+  animation-delay: 60ms;
+}
+.hero-enter-2 {
+  animation-delay: 140ms;
+}
+.hero-enter-3 {
+  animation-delay: 220ms;
+}
+.hero-enter-4 {
+  animation-delay: 300ms;
+}
+.hero-enter-5 {
+  animation-delay: 380ms;
+}
+.hero-enter-6 {
+  animation-delay: 460ms;
+}
+
+/* --------------------------------------------------------------------------
+   Credential marquee
+   --------------------------------------------------------------------------
+   One seamless horizontal loop. The track holds 4 copies of the fact list and
+   translates by exactly one copy width (-25%), so copy N lands where copy N-1
+   was and the loop has no visible seam.
+
+   transform only, never left/right/margin: animating a single composited
+   property is the only version of this that stays off the main thread.
+   -------------------------------------------------------------------------- */
+@keyframes pi-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    /* Exactly one copy width. Dividing the track by the copy count rather than
+       hard-coding a percentage keeps this in step with COPIES in
+       TrustMarquee.tsx, so the loop cannot drift out of alignment. */
+    transform: translate3d(calc(-100% / var(--marquee-copies)), 0, 0);
+  }
+}
+
+.marquee__viewport {
+  /* Load-bearing: the track is many times wider than the section, and without
+     this the document itself gains a horizontal scrollbar. */
+  overflow: hidden;
+  /* A little breathing room so the first fact is not flush to the edge. */
+  padding-block: 0.25rem;
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  /* Must match COPIES in TrustMarquee.tsx. */
+  --marquee-copies: 6;
+  animation: pi-marquee 42s linear infinite;
+}
+
+/*
+  Pause on hover, when anything inside has focus, and when the button is used.
+
+  The `:not([data-paused="false"])` guard is what makes the button authoritative:
+  once the visitor has pressed Play, :hover and :focus-within no longer re-pause
+  the strip, so the control does what it says even if the pointer is still
+  resting on it. data-paused is only present at all once the button has been
+  used, so the convenience pauses still work on first load.
+*/
+.marquee:not([data-paused="false"]):hover .marquee__track,
+.marquee:not([data-paused="false"]):focus-within .marquee__track,
+.marquee[data-paused="true"] .marquee__track {
+  animation-play-state: paused;
+}
+
+/* Keep the round pill legible where it sits over the moving text. */
+.marquee__toggle {
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+.marquee__toggle:hover {
+  border-color: var(--color-green-ink);
+}
+
+.marquee__toggle:focus-visible {
+  outline: 2px solid var(--color-green-ink);
+  outline-offset: 2px;
+}
+
+/* Focus-visible on the action bar / menus uses the green ring. */
+@media (prefers-reduced-motion: reduce) {
+  /* scroll-behavior is already `auto` on the base rule, so nothing to undo
+     here - this block only needs to neutralise the animations. */
+
+  .reveal-ready .reveal {
+    opacity: 1;
+    animation: none !important;
+  }
+
+  .hero-enter {
+    animation: none !important;
+    opacity: 1;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  /* The catch-all above sets one iteration at 0.001ms, which would freeze the
+     marquee track at translateX(-25%) and leave a permanent seam. Reset it and
+     drop the duplicate copies, so this degrades to a plain static row of the
+     real facts rather than three-quarters of an off-screen copy.
+     Class selectors beat the `*` above on specificity, both are !important. */
+  .marquee__track {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .marquee__item--clone {
+    display: none !important;
+  }
+
+  /* Nothing is moving, so there is nothing to pause. */
+  .marquee__toggle {
+    display: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Utilities
+   -------------------------------------------------------------------------- */
+
+/* Reserve space for the fixed mobile action bar. Height is set inline from
+   JS so it can shrink when the bar is hidden. */
+@utility action-bar-pad {
+  padding-bottom: calc(var(--mobile-bar-h) + env(safe-area-inset-bottom));
+}
+
+@utility safe-b {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@utility safe-t {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Hide the scrollbar on the QuickActions strip, which scrolls horizontally by
+   snap on small screens, while keeping it keyboard scrollable and still showing
+   the native momentum behaviour.
+   Not used by the credential marquee - that is animated with overflow: hidden
+   on .marquee__viewport, so it has no scrollbar to hide. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
