@@ -179,12 +179,12 @@ export function directWhatsAppUrl(kind: "emergency" | "quote" = "quote") {
 export const WHATSAPP_HINTS = {
   free: "Free • No obligation • Sent directly to Paul",
   attach:
-    "Have photos? You can attach them directly in WhatsApp after sending your enquiry.",
+    "Attach photos in WhatsApp after sending.",
   copyFallback:
     "WhatsApp could not be opened. You can call Paul on 07445 846762 or copy your enquiry below.",
   copyLabel: "Copy message",
   copied: "Copied",
   voicemail:
     "Can't get through? Please leave a voicemail and Paul will get back to you.",
-  whatsappHint: "Send the details of your job and Paul can reply when available.",
+  whatsappHint: "Paul replies when available.",
 } as const;

@@ -32,10 +32,7 @@ export default function FinalCta() {
               }
               intro={
                 <>
-                  Fill this in and WhatsApp opens with your details ready to
-                  send. There is no account to create, no form to submit to a
-                  server, and nothing stored about you. If WhatsApp is not
-                  convenient, just call instead.
+                  Fill this in: WhatsApp opens ready. No account, no server, nothing stored. Not convenient? Just call.
                 </>
               }
             />
@@ -61,25 +58,7 @@ export default function FinalCta() {
                 </span>
               </a>
 
-              <a
-                href={BUSINESS.email.href}
-                className="group flex min-h-16 items-center justify-between rounded-lg border border-line bg-warm px-5 transition-colors hover:border-green-ink"
-              >
-                <span>
-                  <span className="block text-sm font-semibold text-ink">
-                    Email instead
-                  </span>
-                  <span className="block break-all text-sm text-muted">
-                    {BUSINESS.email.display}
-                  </span>
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="text-xl text-green-ink transition-transform group-hover:translate-x-1"
-                >
-                  →
-                </span>
-              </a>
+
             </div>
 
             <p className="mt-6 text-sm leading-relaxed text-muted">

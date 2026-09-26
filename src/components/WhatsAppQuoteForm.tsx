@@ -137,6 +137,7 @@ export default function WhatsAppQuoteForm({
   const uid = useId();
   const [values, setValues] = useState<QuoteFormValues>({
     ...EMPTY_FORM,
+    workType: "domestic" as WorkType,
     preferredContact: "whatsapp" as PreferredContact,
   });
   const [errors, setErrors] = useState<Errors>({});
