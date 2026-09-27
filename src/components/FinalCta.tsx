@@ -40,6 +40,9 @@ export default function FinalCta() {
 
           {/* Form */}
           <div className="lg:col-span-7">
+            <p className="mb-4 text-sm leading-relaxed text-muted">
+              Used the button in the navigation? Just fill this in and WhatsApp opens ready to send.
+            </p>
             <div className="rounded-2xl border border-line bg-warm p-5 shadow-[0_1px_0_0_rgba(21,24,22,0.06)] sm:p-8">
               <WhatsAppQuoteForm />
             </div>
