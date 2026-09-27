@@ -58,8 +58,8 @@ export const MEDIA = {
   },
   domesticBreak: {
     needs: "Large photograph - extension or renovation electrical work",
-    src: null,
-    alt: "",
+    src: "/images/work-07.webp",
+    alt: "Large photograph - extension or renovation electrical work. Full domestic and commercial scope, from a single socket to a complete installation. PI Electrical covers Bonnyrigg and the surrounding region.",
     ratio: "16 / 10",
     sizes: "100vw",
   },

@@ -31,7 +31,7 @@ export default function MediaSlot({
   return (
     <div
       className={cx(
-        "relative overflow-hidden rounded-[2px]",
+        "relative overflow-hidden rounded-lg",
         dark ? "bg-charcoal" : "bg-surface",
         className,
       )}
