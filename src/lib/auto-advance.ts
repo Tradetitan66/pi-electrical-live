@@ -18,15 +18,22 @@ import { useCallback, useEffect, useRef, useState } from "react";
  * ---------------------------------------------------------------------------
  * Two different things, and conflating them is the bug this design avoids.
  *
- * PAUSE (resumable). The strip is off screen, the tab is hidden, the viewport
- * is desktop-sized, or the visitor prefers reduced motion. Nothing about the
- * visitor's intent changed, so scrolling back resumes the loop.
+ * PAUSE (resumable). The tab is hidden, the viewport is desktop-sized, or the
+ * visitor prefers reduced motion. Nothing about the visitor's intent changed,
+ * so the loop picks up again.
  *
  * STOP (permanent). The visitor touched, focused, or scrolled the strip. At that
  * point they are driving, and the strip must never move again on its own. This
  * is the mis-tap guard: a tile shifting under a finger that is reaching for it
  * is how someone ends up tapping "Emergency" when they meant "Free quote".
  *
+ * Note what is NOT a pause: the strip being scrolled out of view. It cycles from
+ * page load. The homepage hero is about 1435px tall on a phone, so the band does
+ * not appear until roughly 600px of scrolling, and gating the loop on visibility
+ * made the feature look entirely dead - you had to already be looking at the
+ * band for it to move. Cycling up front means it is turning by the time it is
+ * reached. The trade is that the tile a visitor arrives at is whichever one the
+ * loop happens to be on, rather than always "Call Paul".
  * ---------------------------------------------------------------------------
  * ACCESSIBILITY: A KNOWN, DELIBERATE WCAG 2.2.2 DEVIATION
  * ---------------------------------------------------------------------------
@@ -37,10 +44,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
  * oversight, taken to keep the band free of a pause button.
  *
  * What is done to limit the harm: it is phone-only (the desktop layout is a
- * static grid with nothing to scroll), it pauses whenever the strip is not
- * visible, it pauses when the tab is hidden, it never runs under reduced
- * motion, the first loop is about twenty seconds, and any interaction stops it
- * for good.
+ * static grid with nothing to scroll), it pauses when the tab is hidden, it
+ * pauses while an overlay has the page inert, it never runs under reduced
+ * motion, one loop is about twenty seconds, and any interaction stops it for
+ * good.
  *
  * If this ever needs to comply, the change is small: expose `stopped` and render
  * a play/pause button beside the indicators. The stop machinery is already here.
@@ -160,8 +167,6 @@ export function useAutoAdvance<T extends HTMLElement>({
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const mobile = window.matchMedia(MOBILE_MAX);
 
-    let visible = true;
-
     const tick = () => {
       timerRef.current = null;
 
@@ -169,7 +174,6 @@ export function useAutoAdvance<T extends HTMLElement>({
       if (stoppedRef.current) return;
       if (reduceMotion.matches) return;
       if (!mobile.matches) return;
-      if (!visible) return;
       if (document.hidden) return;
 
       /* An open overlay (mobile menu, quote modal) marks everything outside
@@ -187,20 +191,11 @@ export function useAutoAdvance<T extends HTMLElement>({
       if (!stoppedRef.current) timerRef.current = setTimeout(tick, interval);
     };
 
-    /* Only move the strip while it is actually on screen. This is a pause, not
-       a stop: coming back into view resumes. */
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        visible = entry.isIntersecting;
-        if (visible) schedule();
-        else clearTimer();
-      },
-      { threshold: 0 },
-    );
+    /* Deliberately no IntersectionObserver here. The band sits far below the
+       fold on a phone, so pausing while it is off screen meant it had not moved
+       a step by the time anyone could see it. It cycles from page load instead. */
 
-    if (ref.current) observer.observe(ref.current);
-
-    /* Off screen, hidden tab, or a resize across the breakpoint: recompute. */
+    /* Hidden tab, or a resize across the breakpoint: recompute. */
     const onVisibility = () => {
       if (document.hidden) clearTimer();
       else schedule();
@@ -215,7 +210,6 @@ export function useAutoAdvance<T extends HTMLElement>({
 
     return () => {
       clearTimer();
-      observer.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
       reduceMotion.removeEventListener("change", onMedia);
       mobile.removeEventListener("change", onMedia);
