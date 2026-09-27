@@ -127,7 +127,7 @@ export default function MobileMenu({
           Call {BUSINESS.owner} - {BUSINESS.phone.display}
         </a>
         <Link
-          href="/#quote"
+          href="#quote"
           onClick={onClose}
           className="flex min-h-14 items-center justify-center rounded-lg bg-green font-semibold text-black"
         >

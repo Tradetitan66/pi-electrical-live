@@ -72,7 +72,7 @@ export default function MobileActionBar() {
           Call {BUSINESS.owner}
         </a>
         <Link
-          href="/#quote"
+          href="#quote"
           onClick={() =>
             track("quote_cta_clicked", {
               location: "mobile_bar",

@@ -56,7 +56,7 @@ export default function ProjectsAboutPage() {
       >
         <div className="flex flex-col gap-3 sm:flex-row">
           <Button
-            href="/#quote"
+            href="#quote"
             size="lg"
             arrow
             analyticsEvent="quote_cta_clicked"

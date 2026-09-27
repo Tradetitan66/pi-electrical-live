@@ -58,7 +58,7 @@ export default function NotFound() {
             Call {BUSINESS.phone.display}
           </Button>
           <Button
-            href="/#quote"
+            href="#quote"
             variant="outline"
             analyticsEvent="quote_cta_clicked"
             analyticsLocation="not_found"

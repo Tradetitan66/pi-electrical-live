@@ -71,7 +71,7 @@ export default function Hero() {
 
             <div className="hero-enter hero-enter-4 mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Button
-                href="/#quote"
+                href="#quote"
                 size="lg"
                 arrow
                 analyticsEvent="quote_cta_clicked"

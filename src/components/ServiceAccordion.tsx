@@ -137,7 +137,7 @@ export default function ServiceAccordion() {
         >
           See the full service list
         </Button>
-        <Button href="/#quote" size="lg" variant="outline">
+        <Button href="#quote" size="lg" variant="outline">
           Or get a free quote
         </Button>
       </div>

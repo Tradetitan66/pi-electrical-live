@@ -56,7 +56,7 @@ export default function ProjectsTeaser() {
               >
                 Projects &amp; About
               </Button>
-              <Button href="/#quote" size="lg" variant="outline">
+              <Button href="#quote" size="lg" variant="outline">
                 Get a free quote
               </Button>
             </div>
