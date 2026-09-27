@@ -64,8 +64,8 @@ export default function WorkCarousel() {
 <SectionHeading
   id="work-heading"
   eyebrow="Recent work"
-  title="Providing all aspects of electrical works"
-  intro="A few from recent jobs across Edinburgh, the Lothians and Fife."
+  title="Electrical work across homes & businesses"
+  intro="A selection of recent projects completed across Edinburgh, the Lothians and Fife."
   className="mb-10"
 />
 

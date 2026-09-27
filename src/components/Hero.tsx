@@ -1,87 +1,66 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { BUSINESS, HERO_INTRO } from "@/data/business";
 import Button from "./Button";
-import { QUOTE_ANCHOR } from "@/lib/anchors";
-import { useAnchorHref } from "@/lib/use-quote-jump";
-import { TRUST_FACTS, BUSINESS, HERO_INTRO } from "@/data/business";
-import { AREA_SUMMARY } from "@/data/areas";
 
 /**
  * Hero.
  *
- * Server component - the entrance animation is pure CSS via .hero-enter, so
- * there is no JavaScript on the critical path.
- *
- * The heading is the LCP element, so it is text rather than an image. The
- * hero is text-only: the photography lives in the work carousel below it, so
- * the heading does not wait on a bitmap to paint.
+ * Premium dark theme hero with 3-value row beneath CTAs.
+ * Refined editorial layout with clean spacing.
  */
 export default function Hero() {
-  const quoteHref = useAnchorHref(QUOTE_ANCHOR);
+  const quoteHref = "#quote";
 
   return (
     <section
       aria-labelledby="hero-heading"
-      /* Marks this as the first section of the page for the mobile action bar,
-         which stays hidden until the visitor has scrolled past it. */
       data-first-section
-      className="relative overflow-hidden border-b border-line pt-header"
+      className="relative pt-header"
+      style={{ backgroundColor: "#2A2A2A" }}
     >
-      {/* Faint grid, evoking graph paper / a technical drawing. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.55]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(21,24,22,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(21,24,22,0.05) 1px, transparent 1px)",
-          backgroundSize: "72px 72px",
-          maskImage:
-            "radial-gradient(ellipse 90% 70% at 70% 0%, black, transparent 75%)",
-          WebkitMaskImage:
-            "radial-gradient(ellipse 90% 70% at 70% 0%, black, transparent 75%)",
-        }}
-      />
-
-      <div className="shell">
-        <div className="grid items-end gap-10 py-14 sm:py-20 lg:grid-cols-12 lg:gap-12 lg:py-28">
-          {/* Copy */}
-          <div className="max-w-[68ch] lg:col-span-12">
-            <p className="hero-enter hero-enter-1 eyebrow flex flex-wrap items-center gap-x-3 gap-y-1 text-foreground">
-              <span>Domestic</span>
-              <span aria-hidden="true" className="text-line">
-                /
-              </span>
-              <span>Commercial</span>
-              <span aria-hidden="true" className="text-line">
-                /
-              </span>
-              <span>Emergency</span>
+      <div className="shell mx-auto max-w-[1400px] px-4 py-16 sm:px-6 sm:py-20 md:px-8 md:py-24 lg:py-28 xl:py-32">
+        <div className="max-w-[800px] mx-auto">
+          <div className="flex flex-col gap-8">
+            {/* Eyebrow */}
+            <p
+              className="font-sans text-[14px] font-medium uppercase tracking-[0.14em]"
+              style={{ color: "#B8B8B2" }}
+            >
+              DOMESTIC / COMMERCIAL / EMERGENCY
             </p>
 
-<h1
-  id="hero-heading"
-  className="hero-enter hero-enter-2 mt-6 text-display-xl text-ink"
->
-  <span className="block">Electrician</span>
-  <span className="block">across</span>
-  <span className="block text-[#6dd491]"><RotatingArea /></span>
-</h1>
+            {/* Main Heading */}
+            <h1
+              id="hero-heading"
+              className="font-display font-bold tracking-[-0.03em] leading-[0.95] max-w-[900px] mx-auto"
+              style={{
+                fontSize: "clamp(56px, 6vw, 88px)",
+                color: "#FFFFFF"
+              }}
+            >
+              Providing all aspects<br className="hidden sm:block" /> of electrical work.
+            </h1>
 
-            <p className="hero-enter hero-enter-3 mt-7 max-w-[54ch] text-lg leading-relaxed text-muted sm:text-xl">
+            {/* Supporting Copy */}
+            <p
+              className="max-w-[650px] text-[20px] leading-[1.55] sm:text-[17px]"
+              style={{ color: "#D0D0CB" }}
+            >
               {HERO_INTRO}
             </p>
 
-            <div className="hero-enter hero-enter-4 mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+            {/* CTA Buttons */}
+            <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
               <Button
                 href={quoteHref}
                 size="lg"
-                arrow
                 analyticsEvent="quote_cta_clicked"
                 analyticsLocation="hero"
                 analyticsAction="hero_primary"
+                className="hero-cta-primary font-semibold px-6 py-4 rounded-[6px] transition-all duration-300 ease-in-out"
               >
-                Get a free quote
+                Get a free quote →
               </Button>
               <Button
                 href={BUSINESS.phone.href}
@@ -90,49 +69,71 @@ export default function Hero() {
                 analyticsEvent="phone_clicked"
                 analyticsLocation="hero"
                 analyticsAction="hero_call"
+                className="font-semibold bg-transparent text-white border border-[#747474] hover:bg-[#383838] hover:border-[#888888] px-6 py-4 rounded-[6px] transition-all duration-300 ease-in-out"
               >
                 Call {BUSINESS.phone.display}
               </Button>
             </div>
 
-            {/* Trust strip */}
-            <dl className="hero-enter hero-enter-5 mt-12 grid grid-cols-2 gap-px overflow-hidden border border-line bg-line sm:grid-cols-4">
-              {TRUST_FACTS.map((fact) => (
-                <div key={fact.id} className="bg-warm px-3 py-4 sm:px-5 sm:py-5">
-                  <dt className="sr-only">{fact.label}</dt>
-                  <dd>
-                    <span className="block font-display text-xl font-extrabold tracking-[-0.02em] text-ink sm:text-2xl">
-                      {fact.value}
-                    </span>
-                    <span className="mt-1 block text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-muted sm:text-xs">
-                      {fact.label}
-                    </span>
-                  </dd>
-                </div>
-              ))}
-            </dl>
+            {/* Divider */}
+            <div
+              className="mt-12 h-px w-full"
+              style={{ backgroundColor: "#474747" }}
+            />
 
-            {/* Moved here from under the hero photograph, which is gone. The
-                hero is text-only now; the photography is the work carousel
-                below it. The measure cap keeps the h1 readable at full width
-                rather than running the whole 1280px. */}
-            <p className="mt-6 max-w-[46ch] text-xs leading-relaxed text-muted">
-              Covering {AREA_SUMMARY.join(", ")} and surrounding areas. Based in{" "}
-              {BUSINESS.address.town}, {BUSINESS.address.region}.
-            </p>
+            {/* 3-Value Row */}
+            <div className="mt-12 grid grid-cols-1 gap-12 sm:grid-cols-3 sm:gap-8">
+              {/* Column 1: NEAT WORKMANSHIP */}
+              <div className="flex flex-col gap-3">
+                <h3
+                  className="font-sans text-[14px] font-bold uppercase tracking-[0.14em]"
+                  style={{ color: "#F4F4F1" }}
+                >
+                  NEAT WORKMANSHIP
+                </h3>
+                <p
+                  className="font-sans text-[16px] leading-[1.6]"
+                  style={{ color: "#B8B8B2" }}
+                >
+                  A finish we&apos;re proud to put our name to.
+                </p>
+              </div>
+
+              {/* Column 2: CLEAR COMMUNICATION */}
+              <div className="flex flex-col gap-3">
+                <h3
+                  className="font-sans text-[14px] font-bold uppercase tracking-[0.14em]"
+                  style={{ color: "#F4F4F1" }}
+                >
+                  CLEAR COMMUNICATION
+                </h3>
+                <p
+                  className="font-sans text-[16px] leading-[1.6]"
+                  style={{ color: "#B8B8B2" }}
+                >
+                  From first message to final finish.
+                </p>
+              </div>
+
+              {/* Column 3: PROFESSIONAL SERVICE */}
+              <div className="flex flex-col gap-3">
+                <h3
+                  className="font-sans text-[14px] font-bold uppercase tracking-[0.14em]"
+                  style={{ color: "#F4F4F1" }}
+                >
+                  PROFESSIONAL SERVICE
+                </h3>
+                <p
+                  className="font-sans text-[16px] leading-[1.6]"
+                  style={{ color: "#B8B8B2" }}
+                >
+                  Punctual, tidy and easy to deal with.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
   );
-}
-
-function RotatingArea() {
-  const areas = ["Edinburgh", "Lothians", "Fife"];
-  const [index, setIndex] = useState(0);
-  useEffect(() => {
-    const timer = setInterval(() => setIndex((i) => (i + 1) % areas.length), 1000);
-    return () => clearInterval(timer);
-  }, [areas.length]);
-  return <span className="text-foreground transition-opacity duration-300 ease-in-out">{areas[index]}</span>;
 }

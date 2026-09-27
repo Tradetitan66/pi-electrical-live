@@ -37,6 +37,16 @@
   --color-green-strong: #1a1a1a;
   --color-green-ink: #2a2a2a;
 
+  /* Hero text colors */
+  --color-hero-eyebrow: #b6b6b0;
+  --color-hero-headline: #ffffff;
+  --color-hero-supporting: #d1d1cc;
+  --color-hero-coverage: #b6b6b0;
+
+  /* Trust stat colors */
+  --color-trust-value: #ffffff;
+  --color-trust-label: #b7b7b1;
+
   /* Review stars - Google rating yellow. See the note in the header comment. */
   --color-star: #a37f00;
   --color-star-dark: #fabb05;
@@ -431,3 +441,23 @@ p {
   html { -webkit-tap-highlight-color: rgba(0,0,0,0.05); }
 }
 img { max-width: 100%; height: auto; }
+
+/* Hero primary CTA - force dark text on off-white background.
+   The Button component's variant system injects text-white via cx() string
+   join, so this class must use !important to guarantee the override. */
+.hero-cta-primary {
+  background-color: #F5F4F0 !important;
+  color: #161616 !important;
+  border-color: #F5F4F0 !important;
+}
+
+.hero-cta-primary:hover {
+  background-color: #FFFFFF !important;
+  color: #161616 !important;
+}
+
+/* Ensure any nested span/svg/arrow inherits the dark text colour */
+.hero-cta-primary span,
+.hero-cta-primary svg {
+  color: inherit;
+}

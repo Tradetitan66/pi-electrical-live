@@ -130,6 +130,12 @@ export interface GalleryImage {
 
 export const WORK_GALLERY: GalleryImage[] = [
   {
+    src: "/images/work-stair-lights.png",
+    alt: "Outdoor LED strip lighting installed on stone walls and steps at a residential property in Edinburgh",
+    native: "1440 / 1800",
+    sizes: "(min-width: 1024px) 44vw, 92vw",
+  },
+  {
     src: "/images/work-01.webp",
     alt: "TODO(alt): landscape shot, cropped hard in a 4/5 frame - describe the work and note the subject is centred",
     native: "1600 / 1181",

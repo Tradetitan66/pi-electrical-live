@@ -126,7 +126,7 @@ export const BUSINESS = {
  * qualifications are the reassurance that follows.
  */
 export const HERO_INTRO =
-  "From changing a socket to completing full rewires, kitchen electrics, home renovations and commercial projects, PI Electrical provides professional electrical work directly from Paul.";
+  "From small repairs and socket changes to full rewires, kitchen electrics, home renovations and commercial projects, all work is carried out directly by Paul at PI Electrical.";
 
 /** Short trust facts used in the strip and badges. Verified only. */
 export const TRUST_FACTS = [
