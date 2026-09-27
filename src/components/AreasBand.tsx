@@ -35,7 +35,7 @@ export default function AreasBand() {
           <div className="lg:col-span-8">
             <ul
               role="list"
-              className="grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-3"
+              className="grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-4 lg:grid-cols-7"
             >
               {AREAS.map((area) => (
                 <li
