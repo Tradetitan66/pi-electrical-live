@@ -27,6 +27,9 @@ export default function PageBanner({
   return (
     <section
       aria-labelledby="page-heading"
+      /* Marks this as the first section of the page for the mobile action bar,
+         which stays hidden until the visitor has scrolled past it. */
+      data-first-section
       className={cx(
         "relative overflow-hidden border-b border-line pt-header",
         className,

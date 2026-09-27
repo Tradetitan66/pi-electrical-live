@@ -24,7 +24,13 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <section className="bg-warm">
+    <section
+      /* Next renders this inside the root layout, so the mobile action bar is
+         present. Marks the first section so that bar stays hidden until the
+         visitor scrolls past it. */
+      data-first-section
+      className="bg-warm"
+    >
       <div className="shell flex min-h-[70dvh] flex-col justify-center py-20 sm:py-28">
         <p className="eyebrow text-green-ink">Error 404</p>
 
