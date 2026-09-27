@@ -434,9 +434,11 @@ p {
   padding-top: env(safe-area-inset-top);
 }
 
-/* Hide the scrollbar on the QuickActions strip, which scrolls horizontally by
-   snap on small screens, while keeping it keyboard scrollable and still showing
-   the native momentum behaviour.
+/* Hide the scrollbar on a horizontal snap scroller, while keeping it keyboard
+   scrollable and still showing the native momentum behaviour.
+   Currently applied to the reviews scroller. NOT applied to the QuickActions
+   strip: it keeps its scrollbar, and the position dots beneath it are the
+   intended position cue.
    Not used by the credential marquee - that is animated with overflow: hidden
    on .marquee__viewport, so it has no scrollbar to hide. */
 @utility no-scrollbar {

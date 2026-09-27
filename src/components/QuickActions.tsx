@@ -8,6 +8,7 @@ import { AREAS_ANCHOR, QUOTE_ANCHOR, anchorHref } from "@/lib/anchors";
 import { BUSINESS } from "@/data/business";
 import { AREA_LIST } from "@/data/areas";
 import { directWhatsAppUrl } from "@/lib/whatsapp";
+import { useAutoAdvance } from "@/lib/auto-advance";
 
 /**
  * Quick-action band directly under the hero.
@@ -18,6 +19,12 @@ import { directWhatsAppUrl } from "@/lib/whatsapp";
  * Horizontally scrollable on narrow screens rather than squeezed into five
  * unreadable columns. `role="list"` keeps the grouping announced properly
  * even though the layout is a scroller.
+ *
+ * On phones only about one and a half tiles fit, so the strip advances itself
+ * one tile at a time to advertise the ones nobody would swipe to. The moment
+ * the visitor touches, focuses or scrolls the strip it stops for good and never
+ * moves again on its own - see lib/auto-advance.ts, including the deliberate
+ * WCAG 2.2.2 deviation documented there.
  *
  * Two tiles link to in-page sections rather than to a fixed URL. Their href is
  * resolved per route from lib/anchors.ts, because a bare "#quote" is inert on
@@ -88,11 +95,25 @@ export default function QuickActions() {
     tile.anchor ? { ...tile, href: anchorHref(tile.anchor, pathname) } : tile,
   );
 
+  /* Mobile-only self-advance. `index` drives the position dots. */
+  const { ref, index, stop } = useAutoAdvance<HTMLUListElement>({
+    count: tiles.length,
+  });
+
   return (
     <section aria-label="Quick actions" className="border-b border-line bg-white">
       <div className="shell">
         <ul
+          ref={ref}
           role="list"
+          /* Any of these means the visitor is driving, so the loop stops for
+             good. The wheel and key handlers cover a trackpad or an arrow key
+             without a pointer ever touching the strip. */
+          onPointerDown={stop}
+          onTouchStart={stop}
+          onFocus={stop}
+          onWheel={stop}
+          onKeyDown={stop}
           className="-mx-5 flex snap-x snap-mandatory gap-px overflow-x-auto px-5 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 lg:grid-cols-5"
         >
           {tiles.map((tile) => {
@@ -139,6 +160,33 @@ export default function QuickActions() {
             );
           })}
         </ul>
+
+        {/*
+          Position indicators, phone widths only - from sm up the list is a
+          static grid with everything already visible, so a position indicator
+          would be meaningless.
+
+          Decorative: the tiles are already announced as a list, so repeating
+          them here would only add noise. Deliberately not interactive, since
+          there is no control to offer.
+        */}
+        <div
+          aria-hidden="true"
+          data-quick-actions-dots
+          className="flex items-center justify-center gap-1.5 pb-3 sm:hidden"
+        >
+          {tiles.map((tile, dot) => (
+            <span
+              key={tile.id}
+              data-quick-actions-dot
+              data-active={dot === index ? "true" : undefined}
+              className={cx(
+                "h-1.5 rounded-full transition-all duration-300",
+                dot === index ? "w-5 bg-green" : "w-1.5 bg-green-ink/25",
+              )}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
