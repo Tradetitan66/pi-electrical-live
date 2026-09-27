@@ -9,6 +9,10 @@
  * a locked aspect ratio - so there is no layout shift when a real image is
  * dropped in, and no fabricated alt text.
  *
+ * There is no `hero` slot any more. The hero is text-only; the photography
+ * lives in the work carousel below it. See WORK_GALLERY at the foot of this
+ * file - that one is real assets, and its alt text is still TODO.
+ *
  * TO ATTACH A REAL IMAGE
  * ----------------------
  * 1. Put the file in /public/images (prefer a descriptive, space-free name).
@@ -38,14 +42,6 @@ export interface MediaSlotConfig {
 }
 
 export const MEDIA = {
-  hero: {
-    needs: "Hero photograph - Paul working, or a completed installation",
-    src: null,
-    alt: "",
-    ratio: "4 / 5",
-    priority: true,
-    sizes: "(min-width: 1024px) 50vw, 100vw",
-  },
   aboutPrimary: {
     needs: "Photograph of Paul, or Paul on site",
     src: null,
@@ -84,5 +80,91 @@ export const MEDIA = {
 } as const satisfies Record<string, MediaSlotConfig>;
 
 export type MediaKey = keyof typeof MEDIA;
+
+/* ============================================================================
+ * WORK CAROUSEL
+ * ---------------------------------------------------------------------------
+ * Six photographs of completed work, shown in a self-advancing carousel
+ * directly below the hero. Every one of these is a real asset, so unlike the
+ * slots above there is no placeholder fallback and no `needs` prompt.
+ *
+ * ---------------------------------------------------------------------------
+ * ALT TEXT IS A PLACEHOLDER AND MUST BE REPLACED
+ * ---------------------------------------------------------------------------
+ * Every `alt` below begins `TODO(alt)`. That is deliberate and it is not a
+ * coding convenience: the model that assembled this had no image-input
+ * capability and could not see what the photographs contain. Rather than
+ * write plausible-sounding descriptions, which would be fabricated claims
+ * about a real client's work, the field is left obviously unfinished.
+ *
+ * `grep -rn "TODO(alt)" src/` lists every one. Each needs a real sentence
+ * describing the work in the frame - "Rewired consumer unit with labelled
+ * circuits in a renovated kitchen", not "Electrical work". Until then these
+ * read as empty to a screen reader, which is why they are marked rather than
+ * quietly left as "".
+ *
+ * ---------------------------------------------------------------------------
+ * WORK-01 IS LANDSCAPE IN A PORTRAIT FRAME
+ * ---------------------------------------------------------------------------
+ * work-01 is 1600x1181 (1.355 landscape); the other five are 0.78-0.90
+ * portrait. The carousel frame is a uniform 4/5, so this one is object-cover
+ * cropped and loses roughly 59% of its width. That was a conscious decision -
+ * keeping all six beat dropping to five for ratio consistency - but the crop
+ * point is centre, because it was not possible to see where the subject sits.
+ * If the subject gets cut, `objectPosition` on that entry is the fix, and it
+ * is the one field here that most needs a human eye.
+ * ============================================================================
+ */
+
+export interface GalleryImage {
+  src: string;
+  /** See the alt-text warning above. Replace before this ships to customers. */
+  alt: string;
+  /** Native ratio of the source file, recorded so the crop is not a surprise. */
+  native: string;
+  /** sizes attribute for the responsive srcset. */
+  sizes: string;
+  /** object-position, only where the default centre crop is known to be wrong. */
+  position?: string;
+}
+
+export const WORK_GALLERY: GalleryImage[] = [
+  {
+    src: "/images/work-01.webp",
+    alt: "TODO(alt): landscape shot, cropped hard in a 4/5 frame - describe the work and note the subject is centred",
+    native: "1600 / 1181",
+    sizes: "(min-width: 1024px) 44vw, 92vw",
+  },
+  {
+    src: "/images/work-02.webp",
+    alt: "TODO(alt): describe the work shown in this photograph",
+    native: "1313 / 1600",
+    sizes: "(min-width: 1024px) 44vw, 92vw",
+  },
+  {
+    src: "/images/work-03.webp",
+    alt: "TODO(alt): describe the work shown in this photograph",
+    native: "1253 / 1600",
+    sizes: "(min-width: 1024px) 44vw, 92vw",
+  },
+  {
+    src: "/images/work-04.webp",
+    alt: "TODO(alt): high-detail shot - describe the work and what the detail shows",
+    native: "1416 / 1572",
+    sizes: "(min-width: 1024px) 44vw, 92vw",
+  },
+  {
+    src: "/images/work-05.webp",
+    alt: "TODO(alt): describe the work shown in this photograph",
+    native: "1369 / 1600",
+    sizes: "(min-width: 1024px) 44vw, 92vw",
+  },
+  {
+    src: "/images/work-06.webp",
+    alt: "TODO(alt): describe the work shown in this photograph",
+    native: "1404 / 1564",
+    sizes: "(min-width: 1024px) 44vw, 92vw",
+  },
+];
 
 /** Project photos are configured per-project in data/projects.ts instead. */

@@ -60,12 +60,17 @@ export const BUSINESS = {
    * Paul has been FULLY QUALIFIED. It is never rendered as "5 years in
    * business" or a bare "5 years' experience", which would read as time
    * trading and would be a different claim.
+   *
+   * Written as "5+" / "over 5" rather than a flat "5", so the claim is a floor
+   * and not a ceiling. It does not need re-editing every year, and it stays
+   * true as the real figure grows. The number itself stays single-sourced on
+   * `fullyQualifiedYears` - never type the 5 again in copy.
    */
   facts: {
     fullyQualified: true,
     fullyQualifiedYears: 5,
     fullyQualifiedNote:
-      "Paul has been a fully qualified electrician for 5 years, working across domestic and commercial electrical projects.",
+      "Paul has been a fully qualified electrician for over 5 years, working across domestic and commercial electrical projects.",
     publicLiability: "£2 million",
     publicLiabilityNote:
       "Fully covered with public liability insurance up to £2 million.",
@@ -121,13 +126,13 @@ export const BUSINESS = {
  * qualifications are the reassurance that follows.
  */
 export const HERO_INTRO =
-  "From changing a socket to full rewires, kitchen electrics, home renovations and commercial projects. Direct, professional electrical work from Paul at PI Electrical.";
+  "From changing a socket to completing full rewires, kitchen electrics, home renovations and commercial projects, PI Electrical provides professional electrical work directly from Paul.";
 
 /** Short trust facts used in the strip and badges. Verified only. */
 export const TRUST_FACTS = [
   {
     id: "qualified",
-    value: `${BUSINESS.facts.fullyQualifiedYears} Years`,
+    value: `${BUSINESS.facts.fullyQualifiedYears}+ Years`,
     label: "Fully qualified",
   },
   { id: "insurance", value: "£2M", label: "Public liability" },

@@ -2,12 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Button from "./Button";
-import MediaSlot from "./MediaSlot";
 import { QUOTE_ANCHOR } from "@/lib/anchors";
 import { useAnchorHref } from "@/lib/use-quote-jump";
 import { TRUST_FACTS, BUSINESS, HERO_INTRO } from "@/data/business";
 import { AREA_SUMMARY } from "@/data/areas";
-import { MEDIA } from "@/data/media";
 
 /**
  * Hero.
@@ -15,9 +13,9 @@ import { MEDIA } from "@/data/media";
  * Server component - the entrance animation is pure CSS via .hero-enter, so
  * there is no JavaScript on the critical path.
  *
- * The heading is the LCP element, so it is text rather than an image, and the
- * photograph slot sits to the right where it cannot delay it. On a phone the
- * photograph is dropped below the fold entirely.
+ * The heading is the LCP element, so it is text rather than an image. The
+ * hero is text-only: the photography lives in the work carousel below it, so
+ * the heading does not wait on a bitmap to paint.
  */
 export default function Hero() {
   const quoteHref = useAnchorHref(QUOTE_ANCHOR);
@@ -48,7 +46,7 @@ export default function Hero() {
       <div className="shell">
         <div className="grid items-end gap-10 py-14 sm:py-20 lg:grid-cols-12 lg:gap-12 lg:py-28">
           {/* Copy */}
-          <div className="lg:col-span-7">
+          <div className="max-w-[68ch] lg:col-span-12">
             <p className="hero-enter hero-enter-1 eyebrow flex flex-wrap items-center gap-x-3 gap-y-1 text-green-ink">
               <span>Domestic</span>
               <span aria-hidden="true" className="text-line">
@@ -113,17 +111,13 @@ export default function Hero() {
                 </div>
               ))}
             </dl>
-          </div>
 
-          {/* Photograph */}
-          <div className="hero-enter hero-enter-6 lg:col-span-5">
-            <MediaSlot
-              slot={MEDIA.hero}
-              className="w-full shadow-[0_2px_0_0_rgba(21,24,22,0.08)]"
-              sizes="(min-width: 1024px) 40vw, 100vw"
-            />
-            <p className="mt-3 text-xs leading-relaxed text-muted">
-              Covering {AREA_SUMMARY} and surrounding areas. Based in{" "}
+            {/* Moved here from under the hero photograph, which is gone. The
+                hero is text-only now; the photography is the work carousel
+                below it. The measure cap keeps the h1 readable at full width
+                rather than running the whole 1280px. */}
+            <p className="mt-6 max-w-[46ch] text-xs leading-relaxed text-muted">
+              Covering {AREA_SUMMARY.join(", ")} and surrounding areas. Based in{" "}
               {BUSINESS.address.town}, {BUSINESS.address.region}.
             </p>
           </div>

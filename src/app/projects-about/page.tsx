@@ -95,8 +95,8 @@ export default function ProjectsAboutPage() {
 
               <div className="mt-8 flex flex-col gap-5 text-[0.9375rem] leading-relaxed text-muted sm:text-base">
                 <p>
-                  {BUSINESS.owner} has been a fully qualified electrician for{" "}
-                  {BUSINESS.facts.fullyQualifiedYears} years, working across
+                  {BUSINESS.owner} has been a fully qualified electrician for
+                  over {BUSINESS.facts.fullyQualifiedYears} years, working across
                   domestic and commercial electrical projects. {BUSINESS.name}{" "}
                   is a small business on purpose: you speak to the person doing
                   the work, not a call centre.

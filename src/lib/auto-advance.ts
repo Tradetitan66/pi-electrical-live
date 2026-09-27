@@ -54,8 +54,17 @@ import { useCallback, useEffect, useRef, useState } from "react";
  * ============================================================================
  */
 
-/** Above this the QuickActions list is a multi-column grid, not a scroller. */
+/**
+ * Default width ceiling. Above it the QuickActions list becomes a multi-column
+ * grid with nothing to scroll, so advancing it would be a no-op - the loop is
+ * simply pointless there rather than wrong.
+ *
+ * Callers that advance at every width (the work carousel) pass their own.
+ */
 const MOBILE_MAX = "(max-width: 639.98px)";
+
+/** Matches every viewport, for callers that scroller at all screen sizes. */
+export const ALL_WIDTHS = "(min-width: 0px)";
 
 /** Debounce after a touch, so a tap that never scrolls still stops the loop. */
 const SETTLE_MS = 500;
@@ -63,22 +72,61 @@ const SETTLE_MS = 500;
 export interface AutoAdvance<T extends HTMLElement> {
   /** Attach to the scrolling element. */
   ref: React.RefObject<T | null>;
-  /** Index of the item nearest the left edge, for the position indicators. */
+  /**
+   * Index of the item nearest the left edge, for the position indicators.
+   * Always within 0..count-1, even on a looping strip, so callers can use it
+   * against their own items without knowing about the runway copies.
+   */
   index: number;
   /** True once the visitor has interacted. Exposed for tests and future UI. */
   stopped: boolean;
   /** Stop the loop permanently. Wired to the strip's interaction handlers. */
   stop: () => void;
+  /**
+   * Bring a given slide to the start edge, e.g. from an indicator button.
+   *
+   * Returns false if the target is unreachable or the position is already
+   * correct, so callers can avoid a pointless smooth scroll. Deliberately does
+   * NOT stop the loop: clicking a dot is not the visitor taking over the
+   * carousel, they are still browsing. A real drag or tap on a slide does
+   * stop it, via the interaction handlers.
+   */
+  goTo: (index: number) => boolean;
+  /**
+   * One slide forward / back, wrapping around at the ends. Returns the new
+   * index, or null if there was nowhere to move, so the auto-advance loop can
+   * tell a real step from a no-op and stand itself down.
+   *
+   * Like `goTo`, these do NOT stop the loop. Pressing an arrow is deliberate
+   * navigation, not the visitor grabbing the strip, so the carousel keeps
+   * turning. Because the strip wraps, neither arrow is ever disabled.
+   */
+  next: () => number | null;
+  prev: () => number | null;
 }
 
 export function useAutoAdvance<T extends HTMLElement>({
   interval = 4000,
   count,
+  maxWidth = MOBILE_MAX,
+  loop = false,
 }: {
   /** Delay between steps, in ms. */
   interval?: number;
   /** Number of items. The loop wraps at this many. */
   count: number;
+  /** Media query bounding the widths that advance. */
+  maxWidth?: string;
+  /**
+   * Set when the caller repeats the first slides at the end of the strip as
+   * runway, so the last real slide can be scrolled to the start edge and the
+   * strip can keep going forwards without a dead end. See the LONG NOTE on
+   * runway copies in WorkCarousel.tsx for why a strip of photos needs this.
+   *
+   * Off by default: QuickActions is a plain list with no runway, and folding
+   * positions that are not there would be nonsense.
+   */
+  loop?: boolean;
 }): AutoAdvance<T> {
   const ref = useRef<T | null>(null);
 
@@ -110,21 +158,6 @@ export function useAutoAdvance<T extends HTMLElement>({
    * Position, measured from the live layout
    * ------------------------------------------------------------------ */
 
-  /** Index of the tile whose start edge is nearest the scroller's start edge. */
-  const measureIndex = useCallback((): number => {
-    const el = ref.current;
-    if (!el) return 0;
-
-    const first = el.firstElementChild as HTMLElement | null;
-    if (!first) return 0;
-
-    const step = first.offsetWidth;
-    if (step <= 0) return 0;
-
-    const raw = Math.round(el.scrollLeft / step);
-    return Math.max(0, Math.min(count - 1, raw));
-  }, [count]);
-
   /** Signed distance to bring `child`'s start edge to the scroller's start edge. */
   const offsetOf = useCallback((child: HTMLElement): number => {
     const el = ref.current;
@@ -132,30 +165,211 @@ export function useAutoAdvance<T extends HTMLElement>({
     return child.getBoundingClientRect().left - el.getBoundingClientRect().left;
   }, []);
 
-  /** Advance one step and return the new index, or null if it should not move. */
-  const step_ = useCallback((): number | null => {
+  /**
+   * Absolute position in the strip: how many slides from the first, counting
+   * any runway copies at the end. Measured from live geometry rather than
+   * computed as `scrollLeft / slideWidth`, which is wrong twice over - it
+   * ignores the flex gap, so the answer drifts further off the further along
+   * the strip you go, and it cannot describe a clamped end at all.
+   *
+   * On a looping strip the position is folded back into the first cycle, and
+   * the scroll is corrected to match, before the value is returned. The copy
+   * the visitor is looking at is identical to the real slide it stands in for,
+   * so the correction is invisible - and without it the strip would grind to a
+   * halt on the runway and the indicators would keep climbing past count.
+   */
+  const measureAbsolute = useCallback((): number => {
     const el = ref.current;
-    if (!el || count <= 1) return null;
+    if (!el) return 0;
 
-    /* Nothing to scroll into: at desktop widths this is a grid with
-       overflow visible, so scrollWidth equals clientWidth. */
-    if (el.scrollWidth <= el.clientWidth) return null;
+    const last = el.children.length - 1;
+    if (last <= 0) return 0;
 
-    const next = (measureIndex() + 1) % count;
-    const child = el.children[next] as HTMLElement | null;
-    if (!child) return null;
+    /* Nothing to scroll: a multi-column grid with overflow visible, e.g.
+       QuickActions from sm up. There is no position to report. */
+    const max = el.scrollWidth - el.clientWidth;
+    if (max <= 0) return 0;
 
+    let found: number;
+
+    if (el.scrollLeft <= 0) {
+      found = 0;
+    } else if (el.scrollLeft >= max - 1) {
+      /* Clamped at the far end. The last slide may not be flush with the start
+         edge there, so it is named directly rather than measured. */
+      found = last;
+    } else {
+      const base = el.getBoundingClientRect().left;
+      let best = 0;
+      let bestDistance = Infinity;
+
+      for (let i = 0; i <= last; i += 1) {
+        const child = el.children[i] as HTMLElement;
+        const distance = Math.abs(child.getBoundingClientRect().left - base);
+        /* Strictly less, so an exact tie resolves to the earlier slide, which is
+           the one the browser snaps to when the strip is dragged to a
+           midpoint. */
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          best = i;
+        }
+      }
+
+      found = best;
+    }
+
+    if (!loop || found < count) return found;
+
+    const wrapped = found - count;
+    const child = el.children[wrapped] as HTMLElement | null;
+    if (!child) return found;
+
+    /* Instant, never smooth: this is a correction under the visitor's feet, and
+       animating it would fling them back across the whole gallery. */
     selfScrollRef.current = true;
-    el.scrollTo({ left: el.scrollLeft + offsetOf(child), behavior: "smooth" });
-    /* The smooth scroll emits scroll events for roughly this long. Clearing
-       the flag afterwards stops the next tick racing it. */
+    el.scrollTo({
+      left: Math.max(0, Math.min(max, el.scrollLeft + offsetOf(child))),
+      behavior: "instant",
+    });
     window.setTimeout(() => {
       selfScrollRef.current = false;
     }, SETTLE_MS);
 
-    setIndex(next);
-    return next;
-  }, [count, measureIndex, offsetOf]);
+    return wrapped;
+  }, [count, loop, offsetOf]);
+
+  /**
+   * Where the scroller would have to sit to bring slide `target` to the start
+   * edge, or null if there is nowhere to go.
+   *
+   * Two things make this more than `scrollLeft + offsetOf(child)`:
+   *
+   * 1. It clamps to the real scrollable range. A strip does not always have the
+   *    runway to bring every slide to the start edge, and the browser silently
+   *    discards the overshoot - so the strip stops moving while the indicators
+   *    claim it did. A looping strip has runway and never hits this.
+   *
+   * 2. It reports null when the resolved position is where the strip already
+   *    is, so a caller can skip an unreachable target instead of firing a
+   *    smooth scroll that announces nothing happened.
+   */
+  const resolve = useCallback(
+    (
+      target: number,
+    ): { want: number; child: HTMLElement } | null => {
+      const el = ref.current;
+      if (!el || count <= 1) return null;
+      if (target < 0 || target >= el.children.length) return null;
+
+      /* Nothing to scroll: at desktop widths this is a grid with overflow
+         visible, so scrollWidth equals clientWidth. */
+      const max = el.scrollWidth - el.clientWidth;
+      if (max <= 0) return null;
+
+      const child = el.children[target] as HTMLElement | null;
+      if (!child) return null;
+
+      const from = el.scrollLeft;
+      const want = Math.max(0, Math.min(max, from + offsetOf(child)));
+
+      /* Sub-pixel tolerance throughout: scrollLeft is fractional and settles
+         a hair under the values the layout maths predicts. */
+      if (Math.abs(want - from) <= 1) return null;
+
+      return { want, child };
+    },
+    [count, offsetOf],
+  );
+
+  /**
+   * Scroll to slide `target`, and return the index that ends up on screen.
+   * Null means it could not move. Every move goes through here - the timed loop,
+   * the indicator buttons and the prev/next arrows - so they cannot disagree
+   * about the guards, about clamping, or about when to clear selfScrollRef.
+   */
+  const moveTo = useCallback(
+    (target: number): number | null => {
+      const el = ref.current;
+      const plan = resolve(target);
+      if (!el || !plan) return null;
+
+      selfScrollRef.current = true;
+      el.scrollTo({ left: plan.want, behavior: "smooth" });
+      /* The smooth scroll emits scroll events for roughly this long. Clearing
+         the flag afterwards stops the next tick racing it. */
+      window.setTimeout(() => {
+        selfScrollRef.current = false;
+      }, SETTLE_MS);
+
+      const shown = loop && target >= count ? target - count : target;
+      setIndex(shown);
+      return shown;
+    },
+    [count, loop, resolve],
+  );
+
+  /**
+   * Step one slide in `dir`, wrapping at the ends, and return the new index.
+   *
+   * The wrap is the fiddly part. On a looping strip, stepping forward off the
+   * last slide aims at the first runway copy rather than at slide 1 itself:
+   * the copy is the same photograph, so the wrap costs one ordinary stride
+   * forwards instead of a fast sweep back across the entire strip, which is
+   * what a plain `scrollTo(0)` looks like. Stepping back off the first slide
+   * needs no such trick - the last real slide is already there to step back to.
+   *
+   * The walk over `hop` is what keeps this honest on a strip with no runway,
+   * where the slide next to the one on screen may have nowhere to go: it keeps
+   * going until it finds one that can move, or gives up, so an arrow is never
+   * left doing nothing while the visitor is pressing it.
+   */
+  const step = useCallback(
+    (dir: 1 | -1): number | null => {
+      const from = measureAbsolute();
+      const total = ref.current?.children.length ?? 0;
+      if (count <= 1 || total <= 1) return null;
+
+      for (let hop = 1; hop <= count; hop += 1) {
+        const reached = from + dir * hop;
+        const virtual = ((reached % count) + count) % count;
+
+        const target =
+          loop && reached >= count
+            ? count /* first runway copy */
+            : loop && reached < 0
+              ? count - 1 /* last real slide */
+              : virtual;
+
+        if (target < 0 || target >= total) continue;
+
+        const moved = moveTo(target);
+        if (moved !== null) return moved;
+      }
+
+      return null;
+    },
+    [count, loop, measureAbsolute, moveTo],
+  );
+
+  /** Step forward, wrapping past the last slide back to the first. */
+  const next = useCallback((): number | null => step(1), [step]);
+
+  /** Step back, wrapping before the first slide round to the last. */
+  const prev = useCallback((): number | null => step(-1), [step]);
+
+  /** Scroll so that slide `target` sits at the start edge. */
+  const goTo = useCallback(
+    (target: number): boolean => {
+      if (target < 0 || target >= count) return false;
+
+      /* Already parked there, so a smooth scroll would only burn a cycle
+         telling the visitor the click did nothing. */
+      if (target === measureAbsolute()) return false;
+
+      return moveTo(target) !== null;
+    },
+    [count, measureAbsolute, moveTo],
+  );
 
   /* ---------------------------------------------------------------------
    * The loop
@@ -165,7 +379,7 @@ export function useAutoAdvance<T extends HTMLElement>({
     if (stoppedRef.current || count <= 1) return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const mobile = window.matchMedia(MOBILE_MAX);
+    const mobile = window.matchMedia(maxWidth);
 
     const tick = () => {
       timerRef.current = null;
@@ -181,7 +395,7 @@ export function useAutoAdvance<T extends HTMLElement>({
          wasted work and it desynchronises the indicators, so sit it out. */
       if (ref.current?.closest("[inert]")) return;
 
-      if (step_() === null) return;
+      if (next() === null) return;
 
       timerRef.current = setTimeout(tick, interval);
     };
@@ -214,7 +428,7 @@ export function useAutoAdvance<T extends HTMLElement>({
       reduceMotion.removeEventListener("change", onMedia);
       mobile.removeEventListener("change", onMedia);
     };
-  }, [count, interval, step_, clearTimer]);
+  }, [count, interval, maxWidth, next, clearTimer]);
 
   /* ---------------------------------------------------------------------
    * Keep the indicators honest after a manual swipe
@@ -228,7 +442,7 @@ export function useAutoAdvance<T extends HTMLElement>({
     const onScroll = () => {
       if (selfScrollRef.current) return;
       cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => setIndex(measureIndex()));
+      frame = requestAnimationFrame(() => setIndex(measureAbsolute()));
     };
 
     el.addEventListener("scroll", onScroll, { passive: true });
@@ -236,7 +450,7 @@ export function useAutoAdvance<T extends HTMLElement>({
       cancelAnimationFrame(frame);
       el.removeEventListener("scroll", onScroll);
     };
-  }, [measureIndex]);
+  }, [measureAbsolute]);
 
-  return { ref, index, stopped, stop };
+  return { ref, index, stopped, stop, goTo, next, prev };
 }

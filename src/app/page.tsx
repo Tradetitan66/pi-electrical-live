@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import QuickActions from "@/components/QuickActions";
+import WorkCarousel from "@/components/WorkCarousel";
 import ServiceAccordion from "@/components/ServiceAccordion";
 import SectionHeading from "@/components/SectionHeading";
 import Reveal from "@/components/Reveal";
@@ -23,6 +24,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <WorkCarousel />
       <QuickActions />
 
       {/* Services */}
