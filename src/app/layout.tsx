@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Archivo } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MobileActionBar from "@/components/MobileActionBar";
@@ -207,6 +208,7 @@ export default function RootLayout({
         <Footer />
         <MobileActionBar />
       </body>
+      <GoogleAnalytics gaId="G-5SXH1G36RR" />
     </html>
   );
 }

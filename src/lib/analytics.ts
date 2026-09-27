@@ -2,16 +2,11 @@
  * ============================================================================
  * ANALYTICS
  * ----------------------------------------------------------------------------
- * No analytics provider is loaded by this site, and none should be without the
- * client's explicit instruction. Under UK GDPR / PECR, non-essential
- * analytics cookies require consent, and the site currently sets no
- * analytics cookies at all.
- *
- * This module is the integration seam for when a provider IS approved. It is
- * a no-op unless something is listening, so it costs nothing today.
- *
- * It pushes to `window.dataLayer` (the GTM/GA4 convention) and also
- * dispatches a `pi:track` CustomEvent, so either mechanism can pick it up.
+ * Google Analytics 4 (tag G-5SXH1G36RR) is loaded via `@next/third-parties`
+ * in the root layout, with the client's explicit instruction. Its gtag.js
+ * reads this same `window.dataLayer`, so `track()` events now flow into GA4
+ * automatically. Events also dispatch a `pi:track` CustomEvent, so either
+ * mechanism can pick them up.
  *
  * PRIVACY - IMPORTANT
  * -------------------
@@ -48,7 +43,7 @@ export type AnalyticsContext = {
 };
 
 interface DataLayerWindow extends Window {
-  dataLayer?: unknown[];
+  dataLayer?: object[];
 }
 
 function push(event: AnalyticsEvent, context: AnalyticsContext) {
