@@ -84,7 +84,7 @@ export type MediaKey = keyof typeof MEDIA;
 /* ============================================================================
  * WORK CAROUSEL
  * ---------------------------------------------------------------------------
- * Six photographs of completed work, shown in a self-advancing carousel
+  * Seven photographs of completed work, shown in a self-advancing carousel
  * directly below the hero. Every one of these is a real asset, so unlike the
  * slots above there is no placeholder fallback and no `needs` prompt.
  *
@@ -106,10 +106,10 @@ export type MediaKey = keyof typeof MEDIA;
  * ---------------------------------------------------------------------------
  * WORK-01 IS LANDSCAPE IN A PORTRAIT FRAME
  * ---------------------------------------------------------------------------
- * work-01 is 1600x1181 (1.355 landscape); the other five are 0.78-0.90
+ * work-01 is 1600x1181 (1.355 landscape); the other six are 0.78-0.90
  * portrait. The carousel frame is a uniform 4/5, so this one is object-cover
  * cropped and loses roughly 59% of its width. That was a conscious decision -
- * keeping all six beat dropping to five for ratio consistency - but the crop
+ * keeping all seven beat dropping to six for ratio consistency - but the crop
  * point is centre, because it was not possible to see where the subject sits.
  * If the subject gets cut, `objectPosition` on that entry is the fix, and it
  * is the one field here that most needs a human eye.
@@ -160,11 +160,9 @@ export const WORK_GALLERY: GalleryImage[] = [
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
-    src: "/images/work-06.webp",
+    src: "/images/work-07.webp",
     alt: "TODO(alt): describe the work shown in this photograph",
-    native: "1404 / 1564",
+    native: "1400 / 1600",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
 ];
-
-/** Project photos are configured per-project in data/projects.ts instead. */
