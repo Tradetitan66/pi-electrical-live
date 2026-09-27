@@ -160,9 +160,9 @@ export const WORK_GALLERY: GalleryImage[] = [
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
   {
-    src: "/images/work-07.webp",
+    src: "/images/work-06.webp",
     alt: "TODO(alt): describe the work shown in this photograph",
-    native: "1400 / 1600",
+    native: "1404 / 1564",
     sizes: "(min-width: 1024px) 44vw, 92vw",
   },
 ];
