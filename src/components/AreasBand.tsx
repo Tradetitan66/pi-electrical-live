@@ -40,7 +40,7 @@ export default function AreasBand() {
               {AREAS.map((area) => (
                 <li
                   key={area.name}
-                  className="flex min-h-16 flex-col justify-center gap-0.5 bg-warm px-4 py-4"
+                  className="flex min-h-16 flex-col justify-center items-center gap-0.5 bg-warm px-4 py-4 text-center"
                 >
                   <span className="font-display text-base font-extrabold tracking-[-0.015em] text-ink">
                     {area.name}
