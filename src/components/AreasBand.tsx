@@ -1,4 +1,4 @@
-import { AREAS, BEYOND_COVERAGE, COVERAGE_COPY } from "@/data/areas";
+import { AREAS, BEYOND_COVERAGE } from "@/data/areas";
 import { BUSINESS } from "@/data/business";
 
 /**
@@ -29,9 +29,7 @@ export default function AreasBand() {
             <h2 id="areas-heading" className="mt-6 text-display-md text-ink">
               Areas covered
             </h2>
-            <p className="mt-5 max-w-[42ch] text-[0.9375rem] leading-relaxed text-muted">
-              {COVERAGE_COPY}
-            </p>
+            
           </div>
 
           <div className="lg:col-span-8">
