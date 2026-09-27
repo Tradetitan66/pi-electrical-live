@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Link from "next/link";
 import { track } from "@/lib/analytics";
-import { cx } from "@/lib/cx";
+import { useQuoteJump } from "@/lib/use-quote-jump";
 import { BUSINESS } from "@/data/business";
 
 
@@ -32,6 +31,15 @@ import { BUSINESS } from "@/data/business";
  */
 export default function MobileActionBar() {
   const ref = useRef<HTMLDivElement | null>(null);
+
+  /* Route-aware and scroll-lock aware: this bar is global, so it is rendered
+     on routes that have no #quote target at all. See lib/anchors.ts. */
+  const quote = useQuoteJump(() =>
+    track("quote_cta_clicked", {
+      location: "mobile_bar",
+      action: "mobile_bar_quote",
+    }),
+  );
 
   useEffect(() => {
     const node = ref.current;
@@ -71,18 +79,13 @@ export default function MobileActionBar() {
         >
           Call {BUSINESS.owner}
         </a>
-        <Link
-          href="#quote"
-          onClick={() =>
-            track("quote_cta_clicked", {
-              location: "mobile_bar",
-              action: "mobile_bar_quote",
-            })
-          }
+        <a
+          href={quote.href}
+          onClick={quote.onClick}
           className="flex min-h-15 items-center justify-center bg-green py-3.5 text-[0.8125rem] font-bold uppercase tracking-[0.08em] text-black"
         >
           Free quote
-        </Link>
+        </a>
       </div>
     </div>
   );

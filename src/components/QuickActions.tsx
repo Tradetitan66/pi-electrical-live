@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { track } from "@/lib/analytics";
 import { cx } from "@/lib/cx";
+import { AREAS_ANCHOR, QUOTE_ANCHOR, anchorHref } from "@/lib/anchors";
 import { BUSINESS } from "@/data/business";
 import { AREA_LIST } from "@/data/areas";
 import { directWhatsAppUrl } from "@/lib/whatsapp";
@@ -16,15 +18,30 @@ import { directWhatsAppUrl } from "@/lib/whatsapp";
  * Horizontally scrollable on narrow screens rather than squeezed into five
  * unreadable columns. `role="list"` keeps the grouping announced properly
  * even though the layout is a scroller.
+ *
+ * Two tiles link to in-page sections rather than to a fixed URL. Their href is
+ * resolved per route from lib/anchors.ts, because a bare "#quote" is inert on
+ * any page that does not render that section.
  */
 
-const TILES = [
+type Tile = {
+  id: string;
+  label: string;
+  detail: string;
+  /** Set for tiles that link to an in-page section; resolved against the route. */
+  anchor?: string;
+  href: string;
+  event: "phone_clicked" | "whatsapp_quote_clicked" | "quote_cta_clicked" | null;
+  action: string;
+};
+
+const TILES: Tile[] = [
   {
     id: "call",
     label: "Call Paul",
     detail: BUSINESS.phone.display,
     href: BUSINESS.phone.href,
-    event: "phone_clicked" as const,
+    event: "phone_clicked",
     action: "quick_actions_call",
   },
   {
@@ -32,15 +49,17 @@ const TILES = [
     label: "WhatsApp",
     detail: "Send photos & details",
     href: directWhatsAppUrl("quote"),
-    event: "whatsapp_quote_clicked" as const,
+    event: "whatsapp_quote_clicked",
     action: "quick_actions_whatsapp",
   },
   {
     id: "quote",
     label: "Free quote",
     detail: "No obligation",
-    href: "#quote",
-    event: "quote_cta_clicked" as const,
+    anchor: QUOTE_ANCHOR,
+    /* Placeholder. Replaced with the route-correct href on every render. */
+    href: `#${QUOTE_ANCHOR}`,
+    event: "quote_cta_clicked",
     action: "quick_actions_quote",
   },
   {
@@ -48,20 +67,27 @@ const TILES = [
     label: "Emergency",
     detail: "Day & night",
     href: BUSINESS.phone.href,
-    event: "phone_clicked" as const,
+    event: "phone_clicked",
     action: "quick_actions_emergency",
   },
   {
     id: "areas",
     label: "Areas",
     detail: `${AREA_LIST[0]} + more`,
-    href: "#areas",
+    anchor: AREAS_ANCHOR,
+    /* Placeholder. Replaced with the route-correct href on every render. */
+    href: `#${AREAS_ANCHOR}`,
     event: null,
     action: "quick_actions_areas",
   },
 ];
 
 export default function QuickActions() {
+  const pathname = usePathname();
+  const tiles = TILES.map((tile) =>
+    tile.anchor ? { ...tile, href: anchorHref(tile.anchor, pathname) } : tile,
+  );
+
   return (
     <section aria-label="Quick actions" className="border-b border-line bg-white">
       <div className="shell">
@@ -69,7 +95,7 @@ export default function QuickActions() {
           role="list"
           className="-mx-5 flex snap-x snap-mandatory gap-px overflow-x-auto px-5 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 lg:grid-cols-5"
         >
-          {TILES.map((tile) => {
+          {tiles.map((tile) => {
             const external = /^tel:|^https:/.test(tile.href);
 
             return (

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cx } from "@/lib/cx";
 import { track } from "@/lib/analytics";
+import { useQuoteJump } from "@/lib/use-quote-jump";
 import {
   bindOverlayKeys,
   captureFocus,
@@ -41,6 +42,11 @@ export default function MobileMenu({
   /* Read-only, for `aria-current` highlighting. It deliberately does NOT
      trigger closing - <Header> owns that. */
   const pathname = usePathname();
+
+  /* Closing the panel releases the scroll-lock, and a native jump attempted
+     before that release is dropped by the browser. This handler closes first
+     and jumps once the page can move again. See lib/scroll-to-anchor.ts. */
+  const quote = useQuoteJump(onClose);
 
   useEffect(() => {
     if (!open) return;
@@ -126,13 +132,13 @@ export default function MobileMenu({
         >
           Call {BUSINESS.owner} - {BUSINESS.phone.display}
         </a>
-        <Link
-          href="#quote"
-          onClick={onClose}
+        <a
+          href={quote.href}
+          onClick={quote.onClick}
           className="flex min-h-14 items-center justify-center rounded-lg bg-green font-semibold text-black"
         >
           Get a free quote
-        </Link>
+        </a>
         <p className="mt-3 text-center text-xs leading-relaxed text-muted-dark">
           Can&apos;t get through? Please leave a voicemail and Paul will get
           back to you.

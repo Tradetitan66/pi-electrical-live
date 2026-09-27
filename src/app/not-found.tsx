@@ -58,7 +58,9 @@ export default function NotFound() {
             Call {BUSINESS.phone.display}
           </Button>
           <Button
-            href="#quote"
+            /* Absolute, not "#quote": the 404 page renders no quote form, so
+               a bare fragment would resolve against /404 and do nothing. */
+            href="/#quote"
             variant="outline"
             analyticsEvent="quote_cta_clicked"
             analyticsLocation="not_found"

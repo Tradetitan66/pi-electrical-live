@@ -56,6 +56,8 @@ export default function ProjectsAboutPage() {
       >
         <div className="flex flex-col gap-3 sm:flex-row">
           <Button
+            /* Bare fragment is correct: this route renders <FinalCta> at the
+               foot of the page. See lib/anchors.ts. */
             href="#quote"
             size="lg"
             arrow

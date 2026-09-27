@@ -5,6 +5,8 @@ import Link from "next/link";
 import Button from "./Button";
 import { track } from "@/lib/analytics";
 import { cx } from "@/lib/cx";
+import { QUOTE_ANCHOR } from "@/lib/anchors";
+import { useAnchorHref } from "@/lib/use-quote-jump";
 import { HOME_SERVICE_ROWS } from "@/data/services";
 
 /**
@@ -35,6 +37,7 @@ import { HOME_SERVICE_ROWS } from "@/data/services";
 export default function ServiceAccordion() {
   const uid = useId();
   const [open, setOpen] = useState<string | null>(HOME_SERVICE_ROWS[0].id);
+  const quoteHref = useAnchorHref(QUOTE_ANCHOR);
 
   const toggle = (id: string) => {
     // `open` is this render's value, which is the state at click time, so this
@@ -137,7 +140,7 @@ export default function ServiceAccordion() {
         >
           See the full service list
         </Button>
-        <Button href="#quote" size="lg" variant="outline">
+        <Button href={quoteHref} size="lg" variant="outline">
           Or get a free quote
         </Button>
       </div>

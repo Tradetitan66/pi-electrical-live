@@ -56,6 +56,9 @@ export default function ProjectsTeaser() {
               >
                 Projects &amp; About
               </Button>
+              {/* Bare fragment is correct: this component only renders on
+                  "/", which always has the quote form below it. If it is ever
+                  mounted on another route, use useAnchorHref(QUOTE_ANCHOR). */}
               <Button href="#quote" size="lg" variant="outline">
                 Get a free quote
               </Button>
