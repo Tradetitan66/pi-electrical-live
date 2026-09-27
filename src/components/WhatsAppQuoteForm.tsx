@@ -418,69 +418,37 @@ export default function WhatsAppQuoteForm({
       </div>
 
       {/* ---------------------------------------------------------------- */}
-      {/* Phone + preferred contact                                           */}
+      {/* Phone                                                              */}
       {/* ---------------------------------------------------------------- */}
-      <div className={cx("grid gap-5", !emergency && "sm:grid-cols-2")}>
-        <div>
-          <label
-            htmlFor={`${uid}-phone`}
-            className="mb-2 block text-sm font-semibold text-ink"
+      <div>
+        <label
+          htmlFor={`${uid}-phone`}
+          className="mb-2 block text-sm font-semibold text-ink"
+        >
+          Phone{" "}
+          <span className="font-normal text-muted">
+            {emergency ? "(required)" : "(optional)"}
+          </span>
+        </label>
+        <input
+          id={`${uid}-phone`}
+          name="phone"
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          value={values.phone}
+          onChange={(e) => set("phone", e.target.value)}
+          aria-invalid={errors.phone ? true : undefined}
+          aria-describedby={errors.phone ? `${uid}-phone-err` : undefined}
+          className={fieldClass("phone")}
+        />
+        {errors.phone ? (
+          <p
+            id={`${uid}-phone-err`}
+            className="mt-2 text-sm font-medium text-red-700"
           >
-            Phone{" "}
-            <span className="font-normal text-muted">
-              {emergency ? "(required)" : "(optional)"}
-            </span>
-          </label>
-          <input
-            id={`${uid}-phone`}
-            name="phone"
-            type="tel"
-            inputMode="tel"
-            autoComplete="tel"
-            value={values.phone}
-            onChange={(e) => set("phone", e.target.value)}
-            aria-invalid={errors.phone ? true : undefined}
-            aria-describedby={errors.phone ? `${uid}-phone-err` : undefined}
-            className={fieldClass("phone")}
-          />
-          {errors.phone ? (
-            <p
-              id={`${uid}-phone-err`}
-              className="mt-2 text-sm font-medium text-red-700"
-            >
-              {errors.phone}
-            </p>
-          ) : null}
-        </div>
-
-        {!emergency ? (
-          <div>
-            <label
-              htmlFor={`${uid}-contact`}
-              className="mb-2 block text-sm font-semibold text-ink"
-            >
-              How should Paul reply?
-            </label>
-            <select
-              id={`${uid}-contact`}
-              name="preferredContact"
-              value={values.preferredContact ?? "whatsapp"}
-              onChange={(e) =>
-                set("preferredContact", e.target.value as PreferredContact)
-              }
-              className={cx(
-                fieldClass("preferredContact"),
-                "appearance-none bg-[length:1rem] bg-[right_0.9rem_center] bg-no-repeat pr-10",
-              )}
-              style={{
-                backgroundImage:
-                  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23626963' stroke-width='1.75' stroke-linecap='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E\")",
-              }}
-            >
-              <option value="whatsapp">WhatsApp</option>
-              <option value="phone">A phone call</option>
-            </select>
-          </div>
+            {errors.phone}
+          </p>
         ) : null}
       </div>
 
