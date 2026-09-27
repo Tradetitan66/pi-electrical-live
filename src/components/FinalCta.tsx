@@ -30,11 +30,7 @@ export default function FinalCta() {
                   Tell {BUSINESS.owner} what you need, and get a straight answer
                 </>
               }
-              intro={
-                <>
-                  Fill this in: WhatsApp opens ready. No account, no server, nothing stored. Not convenient? Just call.
-                </>
-              }
+              
             />
 
             <p className="mt-6 text-sm leading-relaxed text-muted">
