@@ -343,40 +343,6 @@ export default function WhatsAppQuoteForm({
       </div>
 
       {/* ---------------------------------------------------------------- */}
-      {/* Job                                                                 */}
-      {/* ---------------------------------------------------------------- */}
-      <div>
-        <label
-          htmlFor={`${uid}-job`}
-          className="mb-2 block text-sm font-semibold text-ink"
-        >
-          {emergency ? "What is the problem?" : "What do you need done?"}{" "}
-          <span className="font-normal text-muted">(required)</span>
-        </label>
-        <textarea
-          id={`${uid}-job`}
-          name="job"
-          rows={emergency ? 3 : 4}
-          value={values.job}
-          onChange={(e) => set("job", e.target.value)}
-          aria-invalid={errors.job ? true : undefined}
-          aria-describedby={cx(
-            `${uid}-job-hint`,
-            errors.job ? ` ${uid}-job-err` : undefined,
-          )}
-          className={cx(fieldClass("job"), "py-3 leading-relaxed")}
-        />
-        <p id={`${uid}-job-hint`} className="mt-2 text-sm text-muted">
-          A sentence or two is plenty. You can add photos once WhatsApp opens.
-        </p>
-        {errors.job ? (
-          <p id={`${uid}-job-err`} className="mt-1 text-sm font-medium text-red-700">
-            {errors.job}
-          </p>
-        ) : null}
-      </div>
-
-      {/* ---------------------------------------------------------------- */}
       {/* Postcode                                                            */}
       {/* ---------------------------------------------------------------- */}
       <div>
@@ -413,6 +379,40 @@ export default function WhatsAppQuoteForm({
             className="mt-1 text-sm font-medium text-red-700"
           >
             {errors.postcode}
+          </p>
+        ) : null}
+      </div>
+
+      {/* ---------------------------------------------------------------- */}
+      {/* Job                                                                 */}
+      {/* ---------------------------------------------------------------- */}
+      <div>
+        <label
+          htmlFor={`${uid}-job`}
+          className="mb-2 block text-sm font-semibold text-ink"
+        >
+          {emergency ? "What is the problem?" : "What do you need done?"}{" "}
+          <span className="font-normal text-muted">(required)</span>
+        </label>
+        <textarea
+          id={`${uid}-job`}
+          name="job"
+          rows={emergency ? 3 : 4}
+          value={values.job}
+          onChange={(e) => set("job", e.target.value)}
+          aria-invalid={errors.job ? true : undefined}
+          aria-describedby={cx(
+            `${uid}-job-hint`,
+            errors.job ? ` ${uid}-job-err` : undefined,
+          )}
+          className={cx(fieldClass("job"), "py-3 leading-relaxed")}
+        />
+        <p id={`${uid}-job-hint`} className="mt-2 text-sm text-muted">
+          A sentence or two is plenty. You can add photos once WhatsApp opens.
+        </p>
+        {errors.job ? (
+          <p id={`${uid}-job-err`} className="mt-1 text-sm font-medium text-red-700">
+            {errors.job}
           </p>
         ) : null}
       </div>
