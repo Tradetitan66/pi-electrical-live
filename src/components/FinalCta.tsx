@@ -40,7 +40,7 @@ export default function FinalCta() {
 
           {/* Form */}
           <div className="lg:col-span-7">
-            <div className="rounded-[2px] border border-line bg-warm p-5 shadow-[0_1px_0_0_rgba(21,24,22,0.06)] sm:p-8">
+            <div className="rounded-2xl border border-line bg-warm p-5 shadow-[0_1px_0_0_rgba(21,24,22,0.06)] sm:p-8">
               <WhatsAppQuoteForm />
             </div>
           </div>
