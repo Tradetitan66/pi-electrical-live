@@ -34,15 +34,18 @@ export default function ServicesPage() {
         title="Everything from a new socket to a complete installation"
         intro={RANGE_STATEMENT}
         meta={
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
-            <div className="flex items-center gap-2.5">
+          /* Stacked, not inline: the stars sit on their own line above the
+             review count, and the two facts are no longer trying to share one
+             baseline as the area list wraps. */
+          <div className="max-w-[52ch] text-[0.9375rem] leading-relaxed text-muted">
+            <div className="flex flex-col items-start gap-2">
               <Stars rating={5} />
-              <span className="text-sm text-muted">
+              <p>
                 All {REVIEWS.length} supplied reviews rate the work 5&nbsp;stars
-              </span>
+              </p>
             </div>
-            <p className="text-sm text-muted">
-              Covering {AREA_SUMMARY} and surrounding areas
+            <p className="mt-2">
+              Covering {AREA_SUMMARY.join(", ")} and surrounding areas
             </p>
           </div>
         }

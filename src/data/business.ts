@@ -115,6 +115,14 @@ export const BUSINESS = {
   },
 } as const;
 
+/**
+ * Hero lead line. Sits directly under the h1, above the credentials note -
+ * the range of work is what the visitor is looking for first, the
+ * qualifications are the reassurance that follows.
+ */
+export const HERO_INTRO =
+  "From changing a socket to full rewires, kitchen electrics, home renovations and commercial projects. Direct, professional electrical work from Paul at PI Electrical.";
+
 /** Short trust facts used in the strip and badges. Verified only. */
 export const TRUST_FACTS = [
   {
@@ -124,6 +132,7 @@ export const TRUST_FACTS = [
   },
   { id: "insurance", value: "£2M", label: "Public liability" },
   { id: "quotes", value: "Free", label: "No-obligation quotes" },
+  { id: "size", value: "Any size", label: "No job too small" },
 ] as const;
 
 export const SECONDARY_TRUST_FACTS = [

@@ -5,7 +5,7 @@ import Button from "./Button";
 import MediaSlot from "./MediaSlot";
 import { QUOTE_ANCHOR } from "@/lib/anchors";
 import { useAnchorHref } from "@/lib/use-quote-jump";
-import { TRUST_FACTS, BUSINESS } from "@/data/business";
+import { TRUST_FACTS, BUSINESS, HERO_INTRO } from "@/data/business";
 import { AREA_SUMMARY } from "@/data/areas";
 import { MEDIA } from "@/data/media";
 
@@ -25,6 +25,9 @@ export default function Hero() {
   return (
     <section
       aria-labelledby="hero-heading"
+      /* Marks this as the first section of the page for the mobile action bar,
+         which stays hidden until the visitor has scrolled past it. */
+      data-first-section
       className="relative overflow-hidden border-b border-line pt-header"
     >
       {/* Faint grid, evoking graph paper / a technical drawing. */}
@@ -62,15 +65,13 @@ export default function Hero() {
               id="hero-heading"
               className="hero-enter hero-enter-2 mt-6 text-display-xl text-ink"
             >
-              <span className="block">Electricians</span>
+              <span className="block">Electrician</span>
               <span className="block">across</span>
               <span className="block text-green-ink"><RotatingArea /></span>
             </h1>
 
             <p className="hero-enter hero-enter-3 mt-7 max-w-[54ch] text-lg leading-relaxed text-muted sm:text-xl">
-              {BUSINESS.facts.fullyQualifiedNote} Public liability covered to{" "}
-              {BUSINESS.facts.publicLiability}. Free, no-obligation quotes -
-              and no job is too small.
+              {HERO_INTRO}
             </p>
 
             <div className="hero-enter hero-enter-4 mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -97,7 +98,7 @@ export default function Hero() {
             </div>
 
             {/* Trust strip */}
-            <dl className="hero-enter hero-enter-5 mt-12 grid grid-cols-3 gap-px overflow-hidden border border-line bg-line">
+            <dl className="hero-enter hero-enter-5 mt-12 grid grid-cols-2 gap-px overflow-hidden border border-line bg-line sm:grid-cols-4">
               {TRUST_FACTS.map((fact) => (
                 <div key={fact.id} className="bg-warm px-3 py-4 sm:px-5 sm:py-5">
                   <dt className="sr-only">{fact.label}</dt>
