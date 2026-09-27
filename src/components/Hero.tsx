@@ -47,7 +47,7 @@ export default function Hero() {
         <div className="grid items-end gap-10 py-14 sm:py-20 lg:grid-cols-12 lg:gap-12 lg:py-28">
           {/* Copy */}
           <div className="max-w-[68ch] lg:col-span-12">
-            <p className="hero-enter hero-enter-1 eyebrow flex flex-wrap items-center gap-x-3 gap-y-1 text-green-ink">
+            <p className="hero-enter hero-enter-1 eyebrow flex flex-wrap items-center gap-x-3 gap-y-1 text-foreground">
               <span>Domestic</span>
               <span aria-hidden="true" className="text-line">
                 /
@@ -59,14 +59,14 @@ export default function Hero() {
               <span>Emergency</span>
             </p>
 
-            <h1
-              id="hero-heading"
-              className="hero-enter hero-enter-2 mt-6 text-display-xl text-ink"
-            >
-              <span className="block">Electrician</span>
-              <span className="block">across</span>
-              <span className="block text-green-ink"><RotatingArea /></span>
-            </h1>
+<h1
+  id="hero-heading"
+  className="hero-enter hero-enter-2 mt-6 text-display-xl text-ink"
+>
+  <span className="block">Electrician</span>
+  <span className="block">across</span>
+  <span className="block text-[#6dd491]"><RotatingArea /></span>
+</h1>
 
             <p className="hero-enter hero-enter-3 mt-7 max-w-[54ch] text-lg leading-relaxed text-muted sm:text-xl">
               {HERO_INTRO}
@@ -134,5 +134,5 @@ function RotatingArea() {
     const timer = setInterval(() => setIndex((i) => (i + 1) % areas.length), 1000);
     return () => clearInterval(timer);
   }, [areas.length]);
-  return <span className="text-green-ink transition-opacity duration-300 ease-in-out">{areas[index]}</span>;
+  return <span className="text-foreground transition-opacity duration-300 ease-in-out">{areas[index]}</span>;
 }

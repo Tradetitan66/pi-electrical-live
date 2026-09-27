@@ -76,7 +76,7 @@ export default function ServiceAccordion() {
                 >
                   <span
                     aria-hidden="true"
-                    className="w-8 shrink-0 font-mono text-xs font-semibold text-green-ink/70 sm:w-10 sm:text-sm"
+                    className="w-8 shrink-0 font-mono text-xs font-semibold text-foreground/70 sm:w-10 sm:text-sm"
                   >
                     {row.index}
                   </span>
@@ -85,16 +85,16 @@ export default function ServiceAccordion() {
                     {row.title}
                   </span>
 
-                  <span
-                    aria-hidden="true"
-                    className={cx(
-                      "flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-lg leading-none transition-all duration-300",
-                      expanded
-                        ? "rotate-45 border-green-ink bg-green text-black"
-                        : "border-line text-ink group-hover:border-green-ink",
-                    )}
-                  >
-                    +
+<span
+  aria-hidden="true"
+  className={cx(
+    "flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-lg leading-none transition-all duration-300",
+    expanded
+      ? "rotate-45 border-line-strong bg-[#2a2a2a] text-white"
+      : "border-line text-ink group-hover:border-line-strong",
+  )}
+>
+  +
                   </span>
                 </button>
               </h3>
@@ -118,7 +118,7 @@ export default function ServiceAccordion() {
                       service: row.id,
                     })
                   }
-                  className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-green-ink hover:underline hover:underline-offset-4"
+                  className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-foreground hover:underline hover:underline-offset-4"
                 >
                   All services
                   <span aria-hidden="true">→</span>

@@ -39,14 +39,14 @@ export default function SectionHeading({
       <p
         className={cx(
           "eyebrow flex items-center gap-2.5",
-          dark ? "text-green" : "text-green-ink",
+          dark ? "text-white" : "text-foreground",
         )}
       >
         <span
           aria-hidden="true"
           className={cx(
             "h-px w-6",
-            dark ? "bg-green/60" : "bg-green-ink/40",
+            dark ? "bg-white/40" : "bg-[#555555]/40",
           )}
         />
         {eyebrow}

@@ -50,8 +50,8 @@ export default function PageBanner({
       />
 
       <div className="shell py-12 sm:py-16 lg:py-20">
-        <p className="hero-enter hero-enter-1 eyebrow flex items-center gap-2.5 text-green-ink">
-          <span aria-hidden="true" className="h-px w-6 bg-green-ink/40" />
+        <p className="hero-enter hero-enter-1 eyebrow flex items-center gap-2.5 text-foreground">
+          <span aria-hidden="true" className="h-px w-6 bg-[#555555]/40" />
           {eyebrow}
         </p>
 

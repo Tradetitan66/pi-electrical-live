@@ -130,7 +130,7 @@ export default function Wordmark({
           scale,
         )}
       >
-        <span className={dark ? "text-green" : "text-green-ink"}>PI</span>
+        <span className={dark ? "text-white" : undefined} style={dark ? undefined : { color: '#6dd491' }}>PI</span>
         <span
           className={cx("ml-[0.28em]", dark ? "text-white" : "text-ink")}
         >

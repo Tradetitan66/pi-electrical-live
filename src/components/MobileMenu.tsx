@@ -98,14 +98,14 @@ export default function MobileMenu({
               aria-current={active ? "page" : undefined}
               className={cx(
                 "flex min-h-16 items-center justify-between border-b border-white/10 py-4 font-display text-3xl font-extrabold uppercase tracking-[-0.03em]",
-                active ? "text-green" : "text-white",
+                active ? "text-white" : "text-white",
               )}
               style={{ animation: "pi-rise 0.4s both", animationDelay: `${i * 55}ms` }}
             >
               {link.label}
               <span
                 aria-hidden="true"
-                className={cx("text-2xl", active ? "text-green" : "text-white/30")}
+                className={cx("text-2xl", active ? "text-white" : "text-white/30")}
               >
                 →
               </span>
@@ -135,7 +135,7 @@ export default function MobileMenu({
         <a
           href={quote.href}
           onClick={quote.onClick}
-          className="flex min-h-14 items-center justify-center rounded-lg bg-green font-semibold text-black"
+          className="flex min-h-14 items-center justify-center rounded-lg bg-[#2a2a2a] font-semibold text-white"
         >
           Get a free quote
         </a>

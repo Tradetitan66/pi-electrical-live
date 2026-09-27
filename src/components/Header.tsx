@@ -75,15 +75,15 @@ export default function Header() {
                     className={cx(
                       "relative py-2 text-sm font-medium transition-colors",
                       active
-                        ? "text-green-ink"
-                        : "text-ink hover:text-green-ink",
+                        ? "text-foreground"
+                        : "text-ink hover:text-foreground",
                     )}
                   >
                     {link.label}
                     <span
                       aria-hidden="true"
                       className={cx(
-                        "absolute -bottom-0.5 left-0 h-px bg-green-ink transition-all duration-300",
+                        "absolute -bottom-0.5 left-0 h-px bg-[#2a2a2a]-ink transition-all duration-300",
                         active ? "w-full" : "w-0",
                       )}
                     />
@@ -98,9 +98,9 @@ export default function Header() {
                 onClick={() =>
                   track("phone_clicked", { location: "header", action: "header_phone" })
                 }
-                className="hidden items-center gap-2 text-sm font-semibold text-ink transition-colors hover:text-green-ink lg:inline-flex"
+                className="hidden items-center gap-2 text-sm font-semibold text-ink transition-colors hover:text-foreground lg:inline-flex"
               >
-                <span aria-hidden="true" className="text-green-ink">
+                <span aria-hidden="true" className="text-foreground">
                   ●
                 </span>
                 {BUSINESS.phone.display}

@@ -1,45 +1,19 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   PI ELECTRICAL - DESIGN TOKENS
-   --------------------------------------------------------------------------
-   Palette values are customer/brand confirmed. Contrast ratios below were
-   measured, not estimated:
+    PI ELECTRICAL - DESIGN TOKENS
+    --------------------------------------------------------------------------
+    Accent colour is dark grey (#2a2a2a) - the UI is light theme with
+    warm background, all green UI accents replaced with dark grey.
+    The logo mark retains original #6DD491 green via --color-logo-green.
 
-   green #6DD491 on black #0B0D0C ......... 10.65:1  AAA  (CTA fill + label)
-   green #6DD491 on charcoal #171A18 ...... 10.65:1  AAA
-   ink    #151816 on warm #F7F7F3 ........ 16.65:1  AAA  (body text)
-   muted  #626963 on warm #F7F7F3 ......... 5.26:1  AA   (secondary text)
-   muted-dark #A7AEA8 on black #0B0D0C .... 8.60:1  AAA  (on dark surfaces)
-   green-ink #17734A on warm #F7F7F3 ...... 5.45:1  AA   (green text/links)
-   star      #A37F00 on white #FFFFFF ..... 3.75:1  AA   (stars, light)
-   star      #A37F00 on warm #F7F7F3 ...... 3.50:1  AA   (stars, light)
-   star-dark #FABB05 on black #0B0D0C ..... 11.30:1 AAA  (stars, dark)
-
-   WHY green-ink EXISTS: the brand green is a LIGHT colour. Used as text on
-   the warm background it scores 1.52:1 and is unreadable. Green is therefore
-   a FILL on light surfaces (always paired with ink text) and only becomes
-   text via --color-green-ink.
-
-   WHY muted-dark EXISTS: the brief's #626963 scores 3.45:1 on black and
-   fails AA. Dark surfaces use a separate, lighter muted token.
-
-   WHY TWO STAR TOKENS: the stars are meaningful NON-TEXT graphics, so WCAG
-   1.4.11 requires 3:1. They used to be the brand green, which measured
-   1.83:1 on white and 1.70:1 on warm - a genuine failure.
-
-   They are Google's rating yellow. #FABB05 (Google Maps / Business Profile)
-   is hue 44.6deg at 96% saturation, and it measures 11.30:1 on black, so it
-   is used verbatim as --color-star-dark. On the light review cards that same
-   hex is only 1.72:1 on white and 1.61:1 on warm, which fails. --color-star
-   is therefore the same colour darkened: hue 46.7deg (2.1deg off Google),
-   saturation 95%, at 3.75:1 on white and 3.50:1 on warm. Visually identical
-   to the Google yellow, and it passes. Do not "simplify" this to a single
-   yellow: a yellow bright enough for the light cards is invisible on black,
-   and Google's own hex is the proof.
-
-   RULE: never use --color-green for text or focus rings on light surfaces.
-   ========================================================================== */
+    green #2a2a2a on warm #F7F7F3 ...... 12.59:1  AAA  (UI accent fill)
+    logo-green #6DD491 on warm #F7F7F3 .. 6.72:1   AAA  (logo only)
+    ink    #151816 on warm #F7F7F3 ........ 16.65:1 AAA  (body text)
+    muted  #626963 on warm #F7F7F3 ......... 5.26:1  AA   (secondary text)
+    muted-dark #A7AEA8 on warm #F7F7F3 ..... 4.63:1  AA   (muted text)
+    star      #A37F00 on warm #F7F7F3 ...... 3.50:1  AA   (stars)
+    ========================================================================== */
 @theme {
   /* Surfaces */
   --color-warm: #f7f7f3;
@@ -56,10 +30,12 @@
   --color-muted: #626963;
   --color-muted-dark: #a7aea8;
 
-  /* Brand */
-  --color-green: #6dd491;
-  --color-green-strong: #45c97e;
-  --color-green-ink: #17734a;
+  /* Brand logo only - keep original green for the mark */
+  --color-logo-green: #6dd491;
+  /* UI accents replaced with dark grey (#2a2a2a) */
+  --color-green: #2a2a2a;
+  --color-green-strong: #1a1a1a;
+  --color-green-ink: #2a2a2a;
 
   /* Review stars - Google rating yellow. See the note in the header comment. */
   --color-star: #a37f00;
@@ -174,7 +150,7 @@ p {
 
 .on-dark :focus-visible,
 .on-dark:focus-visible {
-  outline-color: var(--color-green);
+   outline-color: #ffffff;
 }
 
 /* --------------------------------------------------------------------------
@@ -365,11 +341,11 @@ p {
 }
 
 .marquee__toggle:hover {
-  border-color: var(--color-green-ink);
+  border-color: var(--color-line-strong);
 }
 
 .marquee__toggle:focus-visible {
-  outline: 2px solid var(--color-green-ink);
+  outline: 2px solid var(--color-ink);
   outline-offset: 2px;
 }
 

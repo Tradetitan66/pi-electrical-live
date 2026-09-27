@@ -28,7 +28,7 @@ export default function ReviewDetailModal({
             href="https://share.google/j2Aw5u3c4NUoEa0CA"
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-lg bg-green px-4 py-2.5 text-sm font-bold text-black hover:bg-green-strong"
+            className="rounded-lg bg-[#2a2a2a] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#1a1a1a]"
           >
             Read on Google
           </a>
@@ -36,7 +36,7 @@ export default function ReviewDetailModal({
             href="https://www.mybuilder.com/profile/pi-electrical"
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-lg border border-line px-4 py-2.5 text-sm font-bold text-ink hover:border-green-ink hover:text-green-ink"
+            className="rounded-lg border border-line px-4 py-2.5 text-sm font-bold text-ink hover:border-line-strong hover:text-foreground"
           >
             Read on MyBuilder
           </a>

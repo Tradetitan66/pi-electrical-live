@@ -58,8 +58,8 @@ export default function QuoteModal({
         >
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="eyebrow flex items-center gap-2.5 text-green-ink">
-                <span aria-hidden="true" className="h-px w-6 bg-green-ink/40" />
+              <p className="eyebrow flex items-center gap-2.5 text-foreground">
+                <span aria-hidden="true" className="h-px w-6 bg-[#555555]/40" />
                 Free, no obligation
               </p>
               <h2

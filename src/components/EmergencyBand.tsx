@@ -7,38 +7,23 @@ import { directWhatsAppUrl } from "@/lib/whatsapp";
 /**
  * Emergency band.
  *
- * COMPLIANCE - the single most important section to get right on this site.
- * Paul does attend night call-outs, but attendance is subject to availability.
- * Nothing here claims "24/7", a guaranteed response time, or availability
- * outside the actual enquiry window. The qualifier is not a small footnote: it
- * sits directly under the heading, because an unqualified availability claim
- * would be misleading under the Consumer Protection from Unfair Trading
- * Regulations 2008.
- *
- * Dark surface: green is used as a FILL with black text, and the secondary
- * text uses --color-muted-dark, which scores 8.60:1 on black. The site-wide
- * --color-muted token is not used here - it fails at 3.45:1.
+ * Dark surface section as a visual break on the light page.
+ * All accent colours are dark grey (#2a2a2a).
+ * The logo mark uses --color-logo-green separately.
  */
 export default function EmergencyBand() {
   return (
     <section
       aria-labelledby="emergency-heading"
-      className="on-dark relative overflow-hidden bg-black text-white"
+      className="relative overflow-hidden bg-[#1a1a1a] text-white"
     >
-      {/* Green bleed, kept subtle so it does not compete with the CTAs. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-40 -top-40 h-[32rem] w-[32rem] rounded-full opacity-[0.13] blur-3xl"
-        style={{ background: "radial-gradient(circle, #6DD491, transparent 70%)" }}
-      />
-
       <div className="shell relative py-16 sm:py-24">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
-            <p className="eyebrow flex items-center gap-2.5 text-green">
+            <p className="eyebrow flex items-center gap-2.5 text-white">
               <span
                 aria-hidden="true"
-                className="inline-block h-2 w-2 rounded-full bg-green motion-safe:animate-pulse"
+                className="inline-block h-2 w-2 rounded-full bg-[#2a2a2a] motion-safe:animate-pulse"
               />
               {BUSINESS.emergency.enquiriesLabel}
             </p>
@@ -48,7 +33,7 @@ export default function EmergencyBand() {
               className="mt-6 text-display-lg text-white"
             >
               Electrical emergency? Call-outs accepted{" "}
-              <span className="text-green">day and night</span>.
+              <span className="text-white">day and night</span>.
             </h2>
 
             <p className="mt-6 max-w-[56ch] text-lg leading-relaxed text-muted-dark">

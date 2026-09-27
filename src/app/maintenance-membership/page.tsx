@@ -82,7 +82,7 @@ export default function MembershipPage() {
       {/* ------------------------------------------------------------------ */}
       <section aria-label="About this summary" className="border-b border-line bg-white">
         <div className="shell py-10">
-          <p className="max-w-[80ch] rounded-[2px] border-l-4 border-green-ink bg-surface px-5 py-4 text-[0.9375rem] leading-relaxed text-ink">
+          <p className="max-w-[80ch] rounded-[2px] border-l-4 border-line-strong bg-surface px-5 py-4 text-[0.9375rem] leading-relaxed text-ink">
             <span className="font-semibold">Please read this first:</span>{" "}
             {MEMBERSHIP_DISCLAIMER} This page sets out the headline terms in
             plain English so you know what you are agreeing to.
@@ -104,7 +104,7 @@ export default function MembershipPage() {
               <li key={item} className="flex items-start gap-3 bg-warm px-5 py-4">
                 <span
                   aria-hidden="true"
-                  className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green text-black"
+                  className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#2a2a2a] text-black"
                 >
                   <span className="text-[0.6875rem] leading-none">✓</span>
                 </span>
@@ -127,7 +127,7 @@ export default function MembershipPage() {
           <div className="grid gap-6 lg:grid-cols-2">
             {/* Included */}
             <div className="rounded-[2px] border border-line bg-white p-6 sm:p-8">
-              <p className="eyebrow text-green-ink">Included</p>
+              <p className="eyebrow text-foreground">Included</p>
               <h3 className="mt-3 text-display-sm text-ink">
                 What the membership covers
               </h3>
@@ -139,7 +139,7 @@ export default function MembershipPage() {
                   >
                     <span
                       aria-hidden="true"
-                      className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-green-ink"
+                      className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#2a2a2a]-ink"
                     />
                     {item}
                   </li>
@@ -152,7 +152,7 @@ export default function MembershipPage() {
 
             {/* Excluded */}
             <div className="rounded-[2px] border border-line bg-white p-6 sm:p-8">
-              <p className="eyebrow text-green-ink">Not included</p>
+              <p className="eyebrow text-foreground">Not included</p>
               <h3 className="mt-3 text-display-sm text-ink">
                 What it does not cover
               </h3>
@@ -179,7 +179,7 @@ export default function MembershipPage() {
                   See the full list of exclusions
                   <span
                     aria-hidden="true"
-                    className="text-xl text-green-ink transition-transform group-open:rotate-45"
+                    className="text-xl text-foreground transition-transform group-open:rotate-45"
                   >
                     +
                   </span>
@@ -211,7 +211,7 @@ export default function MembershipPage() {
         <div className="shell py-14 sm:py-16">
           <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-5">
-              <p className="eyebrow text-green">Important</p>
+              <p className="eyebrow text-white">Important</p>
               <h2 id="waiting-period" className="mt-4 text-display-sm text-white">
                 {MEMBERSHIP.waitingPeriod.days}-day waiting period
               </h2>
@@ -224,7 +224,7 @@ export default function MembershipPage() {
                 Need something attended now? Call{" "}
                 <a
                   href={BUSINESS.phone.href}
-                  className="font-semibold text-green underline underline-offset-4"
+                  className="font-semibold text-white underline underline-offset-4"
                 >
                   {BUSINESS.phone.display}
                 </a>{" "}
@@ -249,7 +249,7 @@ export default function MembershipPage() {
               <li key={step.step} className="flex gap-4 bg-warm p-5">
                 <span
                   aria-hidden="true"
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-green font-mono text-sm font-bold text-black"
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#2a2a2a] font-mono text-sm font-bold text-black"
                 >
                   {step.step}
                 </span>
@@ -300,7 +300,7 @@ export default function MembershipPage() {
                 Call {BUSINESS.owner} on{" "}
                 <a
                   href={BUSINESS.phone.href}
-                  className="font-semibold text-green-ink underline underline-offset-4"
+                  className="font-semibold text-foreground underline underline-offset-4"
                 >
                   {BUSINESS.phone.display}
                 </a>{" "}

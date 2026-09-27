@@ -41,7 +41,7 @@ export default function ServiceGroups() {
           <section aria-labelledby={`group-${band.id}`}>
             <div className="flex flex-col gap-4 border-b border-line pb-6 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="eyebrow text-green-ink">{band.index}</p>
+                <p className="eyebrow text-foreground">{band.index}</p>
                 <h3
                   id={`group-${band.id}`}
                   className="mt-3 text-display-sm text-ink"
@@ -79,7 +79,7 @@ export default function ServiceGroups() {
                 projects.{" "}
                 <Link
                   href="/projects-about"
-                  className="font-semibold text-green-ink underline underline-offset-4"
+                  className="font-semibold text-foreground underline underline-offset-4"
                 >
                   See who we work with
                 </Link>

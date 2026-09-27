@@ -182,7 +182,7 @@ export default function QuickActions() {
               data-active={dot === index ? "true" : undefined}
               className={cx(
                 "h-1.5 rounded-full transition-all duration-300",
-                dot === index ? "w-5 bg-green" : "w-1.5 bg-green-ink/25",
+                dot === index ? "w-5 bg-[#2a2a2a]" : "w-1.5 bg-white/25",
               )}
             />
           ))}
@@ -200,7 +200,7 @@ function TileContent({ label, detail }: { label: string; detail: string }) {
           aria-hidden="true"
           className={cx(
             "h-1.5 w-1.5 rounded-full",
-            label === "Emergency" ? "bg-green" : "bg-green-ink/35",
+            label === "Emergency" ? "bg-[#2a2a2a]" : "bg-white/35",
           )}
         />
         {label}

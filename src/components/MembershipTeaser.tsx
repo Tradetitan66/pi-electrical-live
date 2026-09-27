@@ -23,8 +23,8 @@ export default function MembershipTeaser() {
       <div className="shell py-16 sm:py-20">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
-            <p className="eyebrow flex items-center gap-2.5 text-green-ink">
-              <span aria-hidden="true" className="h-px w-6 bg-green-ink/40" />
+            <p className="eyebrow flex items-center gap-2.5 text-foreground">
+              <span aria-hidden="true" className="h-px w-6 bg-[#555555]/40" />
               Optional
             </p>
 
@@ -47,7 +47,7 @@ export default function MembershipTeaser() {
                 >
                   <span
                     aria-hidden="true"
-                    className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-green-ink"
+                    className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#2a2a2a]-ink"
                   />
                   {item}
                 </li>

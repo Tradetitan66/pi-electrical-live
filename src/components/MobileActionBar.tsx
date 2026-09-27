@@ -107,7 +107,7 @@ export default function MobileActionBar() {
         <a
           href={quote.href}
           onClick={quote.onClick}
-          className="flex min-h-15 items-center justify-center bg-green py-3.5 text-[0.8125rem] font-bold uppercase tracking-[0.08em] text-black"
+          className="flex min-h-15 items-center justify-center bg-[#2a2a2a] py-3.5 text-[0.8125rem] font-bold uppercase tracking-[0.08em] text-white"
         >
           Free quote
         </a>

@@ -22,8 +22,8 @@ export default function AreasBand() {
       <div className="shell py-16 sm:py-24">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-4">
-            <p className="eyebrow flex items-center gap-2.5 text-green-ink">
-              <span aria-hidden="true" className="h-px w-6 bg-green-ink/40" />
+            <p className="eyebrow flex items-center gap-2.5 text-foreground">
+              <span aria-hidden="true" className="h-px w-6 bg-[#555555]/40" />
               Where we work
             </p>
             <h2 id="areas-heading" className="mt-6 text-display-md text-ink">
@@ -54,7 +54,7 @@ export default function AreasBand() {
               ))}
             </ul>
 
-            <div className="mt-8 rounded-[2px] border-l-4 border-green-ink bg-surface px-5 py-4">
+            <div className="mt-8 rounded-[2px] border-l-4 border-line-strong bg-surface px-5 py-4">
               <p className="font-semibold text-ink">Not on the list?</p>
               <p className="mt-1 text-[0.9375rem] leading-relaxed text-muted">
                 {BEYOND_COVERAGE}

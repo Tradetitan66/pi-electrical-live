@@ -121,12 +121,12 @@ export default function TrustMarquee({
             clone && "marquee__item--clone",
           )}
         >
-          <span
-            aria-hidden="true"
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-green text-black"
-          >
-            <span className="text-sm leading-none">✓</span>
-          </span>
+<span
+  aria-hidden="true"
+  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#2a2a2a] text-white"
+>
+  <span className="text-sm leading-none">✓</span>
+</span>
           <span className="text-sm font-semibold text-ink">
             {fact.value}{" "}
             <span className="font-normal text-muted">{fact.label}</span>

@@ -42,13 +42,13 @@ export default function Footer() {
 
           {/* Navigation */}
           <nav aria-label="Footer" className="lg:col-span-3">
-            <h2 className="eyebrow text-green">Explore</h2>
+            <h2 className="eyebrow text-white">Explore</h2>
             <ul className="mt-5 flex flex-col gap-1">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="inline-flex min-h-11 items-center text-sm text-white/85 transition-colors hover:text-green"
+                    className="inline-flex min-h-11 items-center text-sm text-white/85 transition-colors hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -57,7 +57,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/maintenance-membership"
-                  className="inline-flex min-h-11 items-center text-sm text-white/85 transition-colors hover:text-green"
+                  className="inline-flex min-h-11 items-center text-sm text-white/85 transition-colors hover:text-white"
                 >
                   Maintenance Membership
                 </Link>
@@ -65,7 +65,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/privacy"
-                  className="inline-flex min-h-11 items-center text-sm text-white/85 transition-colors hover:text-green"
+                  className="inline-flex min-h-11 items-center text-sm text-white/85 transition-colors hover:text-white"
                 >
                   Privacy
                 </Link>
@@ -75,20 +75,20 @@ export default function Footer() {
 
           {/* Contact */}
           <div className="lg:col-span-3">
-            <h2 className="eyebrow text-green">Contact</h2>
+            <h2 className="eyebrow text-white">Contact</h2>
             <address className="mt-5 flex flex-col gap-1 not-italic">
               <TrackedLink
                 event="phone_clicked"
                 location="footer"
                 action="footer_phone"
                 href={BUSINESS.phone.href}
-                className="inline-flex min-h-11 items-center text-sm font-semibold text-white transition-colors hover:text-green"
+                className="inline-flex min-h-11 items-center text-sm font-semibold text-white transition-colors hover:text-white"
               >
                 {BUSINESS.phone.display}
               </TrackedLink>
               <a
                 href={BUSINESS.email.href}
-                className="inline-flex min-h-11 items-center break-all text-sm text-white/85 transition-colors hover:text-green"
+                className="inline-flex min-h-11 items-center break-all text-sm text-white/85 transition-colors hover:text-white"
               >
                 {BUSINESS.email.display}
               </a>
@@ -109,7 +109,7 @@ export default function Footer() {
 
           {/* Coverage */}
           <div className="lg:col-span-2">
-            <h2 className="eyebrow text-green">Coverage</h2>
+            <h2 className="eyebrow text-white">Coverage</h2>
             <ul className="mt-5 flex flex-col gap-1.5">
               {["Edinburgh", "Lothians", "Fife", "Scotland"].map((area) => (
                 <li key={area} className="text-sm text-white/85">
@@ -118,7 +118,7 @@ export default function Footer() {
               ))}
             </ul>
 
-            <h2 className="eyebrow mt-8 text-green">Follow</h2>
+            <h2 className="eyebrow mt-8 text-white">Follow</h2>
             <ul className="mt-4 flex gap-3">
               <li>
                 <TrackedLink
@@ -127,7 +127,7 @@ export default function Footer() {
                   action="footer_facebook"
                   href="https://www.facebook.com/share/1F7XC3RE5D/"
                   aria-label="Facebook"
-                  className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 text-white/85 transition-colors hover:border-green hover:text-green"
+                  className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 text-white/85 transition-colors hover:border-[#555555] hover:text-white"
                 >
                   <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
                     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
@@ -141,7 +141,7 @@ export default function Footer() {
                   action="footer_reviews"
                   href="https://www.mybuilder.com/profile/pi-electrical/reviews"
                   aria-label="Reviews"
-                  className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 text-white/85 transition-colors hover:border-green hover:text-green"
+                  className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 text-white/85 transition-colors hover:border-[#555555] hover:text-white"
                 >
                   <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26" />
@@ -155,7 +155,7 @@ export default function Footer() {
                   action="footer_instagram"
                   href="https://www.instagram.com/pi_electrical_/"
                   aria-label="Instagram"
-                  className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 text-white/85 transition-colors hover:border-green hover:text-green"
+                  className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 text-white/85 transition-colors hover:border-[#555555] hover:text-white"
                 >
                   <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
                     <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
@@ -171,7 +171,7 @@ export default function Footer() {
         {/* Membership strip - a real product, so it gets a permanent home */}
         <div className="mt-14 flex flex-col gap-3 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-white/85">
-            <span className="font-semibold text-green">
+            <span className="font-semibold text-white">
               {MEMBERSHIP.priceLine}
             </span>{" "}
             Electrical Maintenance Membership - labour cover for eligible
@@ -179,7 +179,7 @@ export default function Footer() {
           </p>
           <Link
             href="/maintenance-membership"
-            className="inline-flex min-h-11 shrink-0 items-center text-sm font-semibold text-green hover:text-green-strong"
+            className="inline-flex min-h-11 shrink-0 items-center text-sm font-semibold text-white hover:text-white-strong"
           >
             See what&apos;s included →
           </Link>

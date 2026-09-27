@@ -51,18 +51,18 @@ type ButtonProps = BaseProps & {
 
 const VARIANTS: Record<ButtonVariant, string> = {
   primary:
-    "bg-green text-black hover:bg-green-strong border border-transparent",
+    "bg-[#2a2a2a] text-white hover:bg-[#1a1a1a] border border-transparent",
   outline:
     "border border-line text-ink hover:bg-black hover:text-white hover:border-black",
-  ghost: "border border-transparent text-ink hover:text-green-ink",
+  ghost: "border border-transparent text-ink hover:text-foreground",
 };
 
 const VARIANTS_DARK: Record<ButtonVariant, string> = {
   primary:
-    "bg-green text-black hover:bg-green-strong border border-transparent",
+    "bg-[#2a2a2a] text-white hover:bg-[#1a1a1a] border border-transparent",
   outline:
-    "border border-white/35 text-white hover:border-green hover:text-green",
-  ghost: "border border-transparent text-white hover:text-green",
+    "border border-white/35 text-white hover:border-white hover:text-white",
+  ghost: "border border-transparent text-white hover:text-white",
 };
 
 const SIZES: Record<ButtonSize, string> = {

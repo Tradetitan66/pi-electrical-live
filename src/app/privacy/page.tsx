@@ -118,14 +118,14 @@ export default function PrivacyPage() {
                   Email{" "}
                   <a
                     href={BUSINESS.email.href}
-                    className="font-semibold text-green-ink underline underline-offset-4"
+                    className="font-semibold text-foreground underline underline-offset-4"
                   >
                     {BUSINESS.email.display}
                   </a>{" "}
                   or call{" "}
                   <a
                     href={BUSINESS.phone.href}
-                    className="font-semibold text-green-ink underline underline-offset-4"
+                    className="font-semibold text-foreground underline underline-offset-4"
                   >
                     {BUSINESS.phone.display}
                   </a>

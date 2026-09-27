@@ -32,7 +32,7 @@ export default function NotFound() {
       className="bg-warm"
     >
       <div className="shell flex min-h-[70dvh] flex-col justify-center py-20 sm:py-28">
-        <p className="eyebrow text-green-ink">Error 404</p>
+        <p className="eyebrow text-foreground">Error 404</p>
 
         <h1 className="mt-6 text-display-lg max-w-[16ch] text-ink">
           That page is not on the board
@@ -50,7 +50,7 @@ export default function NotFound() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="font-display text-xl font-extrabold uppercase tracking-[-0.02em] text-ink underline decoration-green decoration-2 underline-offset-8 transition-colors hover:text-green-ink"
+                  className="font-display text-xl font-extrabold uppercase tracking-[-0.02em] text-ink underline decoration-[#2a2a2a] decoration-2 underline-offset-8 transition-colors hover:text-foreground"
                 >
                   {link.label}
                 </Link>

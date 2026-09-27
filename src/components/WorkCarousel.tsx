@@ -61,13 +61,13 @@ export default function WorkCarousel() {
       className="border-b border-line bg-warm"
     >
       <div className="shell py-16 sm:py-24">
-        <SectionHeading
-          id="work-heading"
-          eyebrow="Recent work"
-          title="Installations, finished and handed over"
-          intro="A few from recent jobs across Edinburgh, the Lothians and Fife."
-          className="mb-10"
-        />
+<SectionHeading
+  id="work-heading"
+  eyebrow="Recent work"
+  title="Providing all aspects of electrical works"
+  intro="A few from recent jobs across Edinburgh, the Lothians and Fife."
+  className="mb-10"
+/>
 
         {/*
           The scroller. Same interaction contract as QuickActions: any pointer,
@@ -221,7 +221,7 @@ export default function WorkCarousel() {
                 onClick={() => goTo(dot)}
                 className={cx(
                   "rounded-full p-1 transition-all duration-300",
-                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-ink",
+                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
                 )}
               >
                 <span
@@ -229,8 +229,8 @@ export default function WorkCarousel() {
                   className={cx(
                     "block rounded-full transition-all duration-300",
                     dot === index
-                      ? "h-1.5 w-5 bg-green"
-                      : "h-1.5 w-1.5 bg-green-ink/25",
+                      ? "h-1.5 w-5 bg-[#2a2a2a]"
+                      : "h-1.5 w-1.5 bg-white/25",
                   )}
                 />
               </button>

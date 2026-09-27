@@ -66,8 +66,8 @@ export default function ProjectGallery() {
               className={cx(
                 "min-h-11 rounded-full border px-5 text-sm font-semibold transition-colors",
                 active
-                  ? "border-green-ink bg-green text-black"
-                  : "border-line bg-white text-ink hover:border-green-ink",
+                  ? "border-line-strong bg-[#2a2a2a] text-black"
+                  : "border-line bg-white text-ink hover:border-line-strong",
               )}
             >
               {option.label}
@@ -131,7 +131,7 @@ function ProjectCard({ project }: { project: Project }) {
         </span>
 
         <span className="block p-5">
-          <span className="eyebrow text-green-ink">{project.category}</span>
+          <span className="eyebrow text-foreground">{project.category}</span>
           <span className="mt-2 block font-display text-lg font-extrabold tracking-[-0.02em] text-ink">
             {project.title}
           </span>
@@ -150,7 +150,7 @@ function ProjectCard({ project }: { project: Project }) {
         >
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="eyebrow text-green-ink">{project.category}</p>
+              <p className="eyebrow text-foreground">{project.category}</p>
               <h3
                 id={`project-${project.id}-title`}
                 className="mt-3 text-display-sm text-ink"
@@ -208,7 +208,7 @@ function ProjectCard({ project }: { project: Project }) {
             <ul className="mt-5 flex flex-col gap-2">
               {project.workCompleted.map((item) => (
                 <li key={item} className="flex items-start gap-2.5 text-sm text-muted">
-                  <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-green-ink" />
+                  <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#2a2a2a]-ink" />
                   {item}
                 </li>
               ))}
@@ -274,7 +274,7 @@ function BeforeAfter({
           />
         </div>
 
-        <span className="pointer-events-none absolute inset-y-0 w-0.5 bg-green" style={{ left: `${position}%` }} aria-hidden="true" />
+        <span className="pointer-events-none absolute inset-y-0 w-0.5 bg-[#2a2a2a]" style={{ left: `${position}%` }} aria-hidden="true" />
 
         <span className="pointer-events-none absolute left-3 top-3 rounded-[2px] bg-black/75 px-2.5 py-1 text-xs font-bold uppercase tracking-[0.08em] text-white">
           Before
@@ -308,7 +308,7 @@ function PendingState() {
   return (
     <div>
       <div className="rounded-[2px] border border-line bg-white p-6 sm:p-8">
-        <p className="eyebrow text-green-ink">Gallery</p>
+        <p className="eyebrow text-foreground">Gallery</p>
         <h3 className="mt-4 text-display-sm text-ink">
           Project photographs are being added
         </h3>
@@ -320,7 +320,7 @@ function PendingState() {
         </p>
         <p className="mt-4 max-w-[62ch] text-[0.9375rem] leading-relaxed text-muted">
           In the meantime, the range of work is set out on the{" "}
-          <a href="/services" className="font-semibold text-green-ink underline underline-offset-4">
+          <a href="/services" className="font-semibold text-foreground underline underline-offset-4">
             services page
           </a>
           , and you can send photos of your own job straight through WhatsApp.

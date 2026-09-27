@@ -60,13 +60,13 @@ export default function MediaSlot({
             aria-hidden="true"
             className={cx(
               "absolute right-4 top-4 h-2 w-2 rounded-full",
-              dark ? "bg-green/50" : "bg-green/50",
+              dark ? "bg-white/20" : "bg-white/20",
             )}
           />
           <span
             className={cx(
               "eyebrow leading-snug",
-              dark ? "text-green/70" : "text-green-ink/60",
+              dark ? "text-white/70" : "text-foreground/60",
             )}
           >
             Photo slot

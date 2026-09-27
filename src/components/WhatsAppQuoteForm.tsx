@@ -231,7 +231,7 @@ export default function WhatsAppQuoteForm({
       FIELD,
       errors[key]
         ? "border-red-600 bg-red-50"
-        : "border-line hover:border-muted focus-within:border-green-ink",
+        : "border-line hover:border-muted focus-within:border-[#555555]",
     );
 
   return (
@@ -285,7 +285,7 @@ export default function WhatsAppQuoteForm({
                     "relative flex min-h-12 cursor-pointer items-center justify-center rounded-lg border px-2 text-center text-sm font-semibold transition-colors",
                     errors.workType ? "border-red-600" : "border-line",
                     active
-                      ? "border-green-ink bg-green text-black"
+                      ? "border-[#555555] bg-[#2a2a2a] text-white"
                       : "bg-white text-ink hover:border-muted",
                   )}
                 >
@@ -460,8 +460,8 @@ export default function WhatsAppQuoteForm({
           type="submit"
           className={cx(
             "flex min-h-14 w-full items-center justify-center gap-2.5 rounded-lg px-6",
-            "text-[0.9375rem] font-bold tracking-[0.02em] text-black transition-colors",
-            "bg-green hover:bg-green-strong",
+            "text-[0.9375rem] font-bold tracking-[0.02em] text-white transition-colors",
+            "bg-[#2a2a2a] hover:bg-[#1a1a1a]",
           )}
         >
           <span>
@@ -483,12 +483,12 @@ export default function WhatsAppQuoteForm({
       {/* ---------------------------------------------------------------- */}
       <div aria-live="polite">
         {status === "sent" ? (
-          <p className="rounded-[2px] border-l-4 border-green-ink bg-surface px-4 py-3 text-sm text-ink">
+          <p className="rounded-[2px] border-l-4 border-[#555555] bg-surface px-4 py-3 text-sm text-ink">
             WhatsApp should now be open with your message. Press send in
             WhatsApp, and attach any photos there. If nothing opened, call{" "}
             <a
               href={BUSINESS.phone.href}
-              className="font-semibold text-green-ink underline underline-offset-2"
+              className="font-semibold text-white underline underline-offset-2"
             >
               {BUSINESS.phone.display}
             </a>
@@ -497,7 +497,7 @@ export default function WhatsAppQuoteForm({
         ) : null}
 
         {status === "fallback" ? (
-          <div className="rounded-[2px] border-l-4 border-amber-600 bg-amber-50 px-4 py-3">
+          <div className="rounded-[2px] border-l-4 border-[#555555] bg-surface px-4 py-3">
             <p className="text-sm font-semibold text-ink">
               WhatsApp could not be opened automatically
             </p>
@@ -505,7 +505,7 @@ export default function WhatsAppQuoteForm({
               Copy the message below into WhatsApp, or call{" "}
               <a
                 href={BUSINESS.phone.href}
-                className="font-semibold text-green-ink underline underline-offset-2"
+                className="font-semibold text-white underline underline-offset-2"
               >
                 {BUSINESS.phone.display}
               </a>
@@ -528,13 +528,13 @@ export default function WhatsAppQuoteForm({
               <button
                 type="button"
                 onClick={onCopy}
-                className="min-h-11 rounded-lg bg-black px-4 text-sm font-semibold text-white"
+                className="min-h-11 rounded-lg bg-[#2a2a2a] px-4 text-sm font-semibold text-white"
               >
                 {copied ? "Copied ✓" : "Copy message"}
               </button>
               <a
                 href={BUSINESS.phone.href}
-                className="inline-flex min-h-11 items-center rounded-lg border border-line px-4 text-sm font-semibold text-ink"
+                className="inline-flex min-h-11 items-center rounded-lg border border-line px-4 text-sm font-semibold text-ink hover:border-line-strong"
               >
                 Call {BUSINESS.owner}
               </a>
