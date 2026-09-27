@@ -37,30 +37,6 @@ export default function FinalCta() {
               }
             />
 
-            <div className="mt-9 flex flex-col gap-3">
-              <a
-                href={BUSINESS.phone.href}
-                className="group flex min-h-16 items-center justify-between rounded-lg border border-line bg-warm px-5 transition-colors hover:border-green-ink"
-              >
-                <span>
-                  <span className="block text-sm font-semibold text-ink">
-                    Prefer to ring?
-                  </span>
-                  <span className="block text-sm text-muted">
-                    {WHATSAPP_HINTS.voicemail}
-                  </span>
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="text-xl text-green-ink transition-transform group-hover:translate-x-1"
-                >
-                  →
-                </span>
-              </a>
-
-
-            </div>
-
             <p className="mt-6 text-sm leading-relaxed text-muted">
               {WHATSAPP_HINTS.whatsappHint} {WHATSAPP_HINTS.attach}
             </p>
