@@ -1,14 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { type CSSProperties, useEffect, useRef, useState } from "react";
 import { SPONSORSHIP_PHOTOS } from "@/data/sponsorships";
 
 export default function SponsorshipCarousel() {
   const track = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
   const [active, setActive] = useState(0);
   const [interacting, setInteracting] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(true);
+  useEffect(() => {
+    const element = track.current;
+    if (!element) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      setVisible(entry.isIntersecting && entry.intersectionRatio >= 0.25);
+    }, { threshold: [0, 0.25] });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => setReducedMotion(query.matches);
@@ -53,8 +63,37 @@ export default function SponsorshipCarousel() {
         }}
       >
         {SPONSORSHIP_PHOTOS.map((photo, index) => (
-          <div key={photo.src} className="relative aspect-square max-h-[680px] w-full shrink-0 snap-center bg-[#171d19]" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${SPONSORSHIP_PHOTOS.length}`}>
-            <Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 1280px) 100vw, 1280px" className="object-contain p-3 sm:p-5" style={{ transform: `rotate(${photo.rotation}deg) scale(0.96)` }} />
+          <div key={photo.src} className="relative isolate overflow-hidden aspect-square max-h-[680px] w-full shrink-0 snap-center bg-[#171d19]" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${SPONSORSHIP_PHOTOS.length}`}>
+            {visible && !reducedMotion && active === index && (
+              <div key={`confetti-${active}`} className="sponsor-confetti" aria-hidden="true">
+                {Array.from({ length: 24 }, (_, particle) => (
+                  <span
+                    key={particle}
+                    className={particle >= 12 ? "hidden sm:block" : "block"}
+                    style={{
+                      [particle % 2 ? "right" : "left"]: "2%",
+                      backgroundColor: ["#4bb874", "#e9bd54", "#6aafcf"][particle % 3],
+                      "--confetti-x": `${(particle % 2 ? -1 : 1) * (8 + (particle % 6) * 7)}px`,
+                      "--confetti-rise": `${180 + (particle % 5) * 65}px`,
+                      "--confetti-spin": `${(particle % 2 ? -1 : 1) * (180 + particle * 30)}deg`,
+                      animationDelay: `${(particle % 6) * 65}ms`,
+                    } as CSSProperties}
+                  />
+                ))}
+              </div>
+            )}
+            <div className="absolute z-10 inset-3 flex items-center justify-center sm:inset-5" style={{ containerType: "size" }}>
+              <div
+                className="relative shrink-0 overflow-hidden rounded-2xl"
+                style={{
+                  width: `min(100cqw, ${100 * photo.width / photo.height}cqh)`,
+                  aspectRatio: `${photo.width} / ${photo.height}`,
+                  transform: `rotate(${photo.rotation}deg) scale(0.96)`,
+                }}
+              >
+                <Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 1280px) 100vw, 1280px" className="object-contain" />
+              </div>
+            </div>
           </div>
         ))}
       </div>

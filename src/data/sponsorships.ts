@@ -15,7 +15,7 @@ export const SPONSORSHIPS = [
 ];
 
 export const SPONSORSHIP_PHOTOS = [
-  { src: "/images/midlothian-sponsored-team-1-graded.png", rotation: -0.3, alt: "Midlothian Indoor Bowling Club team in their navy and blue sponsored strips" },
-  { src: "/images/midlothian-sponsored-team-2.jpeg", rotation: -0.4, alt: "Midlothian Indoor Bowling Club players standing and seated together in their new strips" },
-  { src: "/images/midlothian-sponsored-team-3-graded.png", rotation: 0, alt: "Midlothian Indoor Bowling Club team posing by the scoreboard in their sponsored strips" },
+  { src: "/images/midlothian-sponsored-team-1-graded.png", width: 1254, height: 1254, rotation: 0, alt: "Midlothian Indoor Bowling Club team in their navy and blue sponsored strips" },
+  { src: "/images/midlothian-sponsored-team-2.jpeg", width: 2048, height: 1536, rotation: 0, alt: "Midlothian Indoor Bowling Club players standing and seated together in their new strips" },
+  { src: "/images/midlothian-sponsored-team-3-graded.png", width: 1254, height: 1254, rotation: 0, alt: "Midlothian Indoor Bowling Club team posing by the scoreboard in their sponsored strips" },
 ];

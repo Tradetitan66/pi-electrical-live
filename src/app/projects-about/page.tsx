@@ -3,13 +3,11 @@ import PageBanner from "@/components/PageBanner";
 import ProjectGallery from "@/components/ProjectGallery";
 import CommunitySponsorships from "@/components/CommunitySponsorships";
 import SectionHeading from "@/components/SectionHeading";
-import MediaSlot from "@/components/MediaSlot";
-import Reveal from "@/components/Reveal";
 import Button from "@/components/Button";
 import ReviewsGrid from "@/components/ReviewsGrid";
 import FinalCta from "@/components/FinalCta";
 import WorkCarousel from "@/components/WorkCarousel";
-import { MEDIA, ABOUT_GALLERY } from "@/data/media";
+import { ABOUT_GALLERY } from "@/data/media";
 import { BUSINESS, TRUST_FACTS, SECONDARY_TRUST_FACTS } from "@/data/business";
 import TrustMarquee from "@/components/TrustMarquee";
 import { AREA_SUMMARY } from "@/data/areas";
@@ -121,6 +119,16 @@ export default function ProjectsAboutPage() {
                    testing and emergency call-outs accepted day and night.
                  </p>
                  <p>
+                   Paul works directly with homeowners and businesses, and
+                   alongside builders, renovators and contractors, including{" "}
+                   <a
+                     href="https://gr8constructionprojects.com/"
+                     className="text-[#24663d] underline underline-offset-4 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4"
+                   >
+                     GR8 Construction
+                   </a>.
+                 </p>
+                 <p>
                    Emergency attendance is subject to availability, and no fixed
                    response time is promised - the site would rather be accurate
                    than reassuring.
@@ -145,40 +153,6 @@ export default function ProjectsAboutPage() {
         variant="stacked"
         label="Verified credentials"
       />
-
-      {/* ---------------------------------------------------------------- */}
-      {/* Clients                                                            */}
-      {/* ---------------------------------------------------------------- */}
-      <section
-        aria-labelledby="clients-heading"
-        className="border-y border-line bg-white"
-      >
-        <div className="shell py-14 sm:py-16">
-          <h2 id="clients-heading" className="text-display-sm text-ink">
-            Working with others
-          </h2>
-          <p className="mt-4 max-w-[62ch] text-[0.9375rem] leading-relaxed text-muted">
-            {BUSINESS.name} works alongside builders, renovators and
-            contractors as well as directly with homeowners and businesses.
-          </p>
-
-          <ul role="list" className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {BUSINESS.referencedClients.map((client) => (
-              <li
-                key={client.name}
-                className="rounded-[2px] border border-line bg-warm p-5"
-              >
-                <p className="font-display text-lg font-extrabold tracking-[-0.02em] text-ink">
-                  {client.name}
-                </p>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted">
-                  Construction work carried out for {client.name}.
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
 
       {/* ---------------------------------------------------------------- */}
       {/* Gallery                                                            */}
