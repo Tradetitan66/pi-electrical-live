@@ -87,8 +87,13 @@ export default function ProjectsAboutPage() {
       {/* ---------------------------------------------------------------- */}
       <section aria-labelledby="about-heading" className="bg-warm">
         <div className="shell py-16 sm:py-24">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
-            <div className="lg:col-span-6">
+          <div className="flex flex-col gap-10 sm:gap-14">
+            <WorkCarousel
+              images={ABOUT_GALLERY}
+              showHeading={false}
+              label="Photographs of PI Electrical at work"
+            />
+            <div>
               <SectionHeading
                 id="about-heading"
                 eyebrow="About"
@@ -122,24 +127,6 @@ export default function ProjectsAboutPage() {
                  </p>
                </div>
              </div>
-
-           {/* About Carousel */}
-
-{/* About Carousel */}
-              <div className="lg:col-span-6">
-                {/*
-                  No heading on the carousel: the column beside it already
-                  carries the "About / Straight answers, tidy work" heading, and
-                  rendering it again put the same title twice on one page. The
-                  carousel's own default copy also described these photographs as
-                  "a selection of recent projects", which they are not.
-                */}
-                <WorkCarousel
-                  images={ABOUT_GALLERY}
-                  showHeading={false}
-                  label="Photographs of PI Electrical at work"
-                />
-              </div>
           </div>
         </div>
       </section>
@@ -147,7 +134,7 @@ export default function ProjectsAboutPage() {
       {/*
         Verified facts, no invented credentials.
 
-        This sits as its own full-width band below the two-column grid rather
+        This sits as its own full-width band below the About content rather
         than inside the prose column. In a half-width column the strip is only
         about 640px, and a marquee that narrow scrolls past too fast to read.
         Here it gets the full shell width, which is also what bounds the number

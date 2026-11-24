@@ -40,11 +40,11 @@ export default function ServiceGroups() {
         <Reveal key={band.id}>
           <section aria-labelledby={`group-${band.id}`}>
             <div className="flex flex-col gap-4 border-b border-line pb-6 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="eyebrow text-foreground">{band.index}</p>
+              <div className="border-l-4 border-[#4bb874] pl-4 sm:pl-5">
+                <p className="font-sans text-base font-bold tracking-[0.16em] text-foreground">{band.index}</p>
                 <h3
                   id={`group-${band.id}`}
-                  className="mt-3 text-display-sm text-ink"
+                  className="mt-3 text-display-sm text-[#24663d]"
                 >
                   {band.title}
                 </h3>
